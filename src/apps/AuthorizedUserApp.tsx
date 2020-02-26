@@ -5,7 +5,7 @@ const AuthorizedUserApp = () => {
   const { user } = useContext(SpotifyClientContext);
   return (
     <>
-      <h3>Hello {user.display_name}</h3>
+      <h3>Hello {user?.display_name}</h3>
     </>
   );
 };

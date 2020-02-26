@@ -1,10 +1,8 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import SpotifyClientContext from '../context/SpotifyClientContext';
-import axios from 'axios';
+import { useGetUserMe } from '../hooks';
 
-function useGetUserMe(): [any | null] {
-  const [user, setUser] = useState<any | null>(null);
-
+const SpotifyWrapper = ({ children }: PropsWithChildren<any>) => {
   const params = window.location.hash
     .substring(1)
     .split('&')
@@ -18,28 +16,6 @@ function useGetUserMe(): [any | null] {
     localStorage.setItem('tokenType', params.token_type);
   }
 
-  useEffect(() => {
-    const getUserProfile = async () => {
-      const token = localStorage.getItem('token');
-      const tokenType = localStorage.getItem('tokenType');
-      if (token && tokenType) {
-        const { data } = await axios(' https://api.spotify.com/v1/me', {
-          headers: {
-            Authorization: `${tokenType} ${token}`,
-          },
-        });
-        setUser(() => data);
-      } else {
-        setUser(() => null);
-      }
-    };
-    getUserProfile();
-  }, [params.access_token, params.token_type, params.expires_in]);
-
-  return [user];
-}
-
-const SpotifyWrapper = ({ children }: PropsWithChildren<any>) => {
   const [user] = useGetUserMe();
   const [context, setContext] = useState({
     token: localStorage.getItem('token'),

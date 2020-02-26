@@ -1,6 +1,6 @@
 import React from 'react';
+import { User } from '../models';
 
-type User = any;
 const spotifyTokens = {
   token: '',
   tokenType: '',
