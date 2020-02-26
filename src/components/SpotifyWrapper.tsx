@@ -2,7 +2,7 @@ import React, { PropsWithChildren, useEffect, useState } from 'react';
 import SpotifyClientContext from '../context/SpotifyClientContext';
 import { useGetUserMe } from '../hooks';
 
-const SpotifyWrapper = ({ children }: PropsWithChildren<any>) => {
+const SpotifyWrapper = ({ children }: PropsWithChildren<{}>) => {
   const params = window.location.hash
     .substring(1)
     .split('&')
