@@ -5,12 +5,10 @@ import AppResolver from './components/AppResolver';
 
 const MainApp = () => {
   return (
-    <>
-      <SpotifyWrapper>
-        <GlobalStyle />
-        <AppResolver />
-      </SpotifyWrapper>
-    </>
+    <SpotifyWrapper>
+      <GlobalStyle />
+      <AppResolver />
+    </SpotifyWrapper>
   );
 };
 
