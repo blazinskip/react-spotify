@@ -1,14 +1,17 @@
 import React from 'react';
-import { GlobalStyle } from './styles';
+import { GlobalStyle, theme } from './styles';
 import SpotifyWrapper from './components/SpotifyWrapper';
 import AppResolver from './components/AppResolver';
+import { ThemeProvider } from 'styled-components';
 
 const MainApp = () => {
   return (
-    <SpotifyWrapper>
-      <GlobalStyle />
-      <AppResolver />
-    </SpotifyWrapper>
+    <ThemeProvider theme={theme}>
+      <SpotifyWrapper>
+        <GlobalStyle />
+        <AppResolver />
+      </SpotifyWrapper>
+    </ThemeProvider>
   );
 };
 

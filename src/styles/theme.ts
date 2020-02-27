@@ -10,6 +10,8 @@ export const theme: DefaultTheme = {
   containerMaxWidth: '1200px',
 
   colors: {
-    primary: 'black',
+    white: '#fbfbfb',
+    primary: '#1db954',
+    primaryLight: '#1ed760',
   },
 };
