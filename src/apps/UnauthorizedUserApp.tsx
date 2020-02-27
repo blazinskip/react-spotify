@@ -3,7 +3,6 @@ import SpotifyLoginView from '../views/SpotifyLoginView';
 
 const UnauthorizedUserApp = () => (
   <>
-    <p>User is not logged</p>
     <SpotifyLoginView />
   </>
 );

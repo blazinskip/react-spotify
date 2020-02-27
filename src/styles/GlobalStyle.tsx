@@ -8,6 +8,8 @@ export const GlobalStyle = createGlobalStyle`
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    height: 100vh;
+    background: ${props => props.theme.colors.white};
   }
 
   code {
