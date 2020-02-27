@@ -13,7 +13,9 @@ declare module 'styled-components' {
     };
 
     colors: {
+      white: string;
       primary: string;
+      primaryLight: string;
     };
   }
 }
