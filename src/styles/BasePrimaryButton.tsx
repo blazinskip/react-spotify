@@ -23,7 +23,7 @@ export const BasePrimaryButton = styled('button')`
   vertical-align: middle;
   touch-action: manipulation;
   color: ${props => props.theme.colors.white};
-  
+
   &:hover {
     background: ${props => props.theme.colors.primaryLight};
   }
