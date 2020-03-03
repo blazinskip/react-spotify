@@ -11,6 +11,10 @@ export const GlobalStyle = createGlobalStyle`
     height: 100vh;
     background: ${props => props.theme.colors.white};
   }
+  
+  #root {
+    height: 100vh;
+  }
 
   code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
