@@ -46,6 +46,41 @@ const MainNavigationLink = styled.a`
   }
 `;
 
+const NavigationSection = styled.nav`
+  margin-top: 10px;
+`;
+
+const NavigationSectionHeader = styled.h2`
+  font-weight: normal;
+  font-size: 1rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 0;
+  margin-top: 3rem;
+`;
+
+const NavigationSectionList = styled.ul`
+  padding-left: 0;
+  list-style: none;
+`;
+
+const NavigationSectionListItem = styled.li`
+  display: flex;
+  padding-left: 0;
+`;
+
+const NavigationSectionListItemLink = styled.a`
+  flex-basis: 100%;
+  padding: ${props => props.theme.spacing[props.theme.links.padding]} 0;
+  color: ${props => props.theme.colors[props.theme.links.color]};
+  text-decoration: none;
+
+  transition: color 0.3s;
+
+  &:hover {
+    color: ${props => props.theme.colors[props.theme.links.hoverColor]};
+  }
+`;
+
 const AuthorizedUserApp = () => {
   const { user } = useContext(SpotifyClientContext);
   return (
@@ -64,6 +99,43 @@ const AuthorizedUserApp = () => {
           </MainNavigationListItem>
         </MainNavigationList>
 
+        <NavigationSection>
+          <NavigationSectionHeader>YOUR LIBRARY</NavigationSectionHeader>
+
+          <NavigationSectionList>
+            <NavigationSectionListItem>
+              <NavigationSectionListItemLink href="">Made For You</NavigationSectionListItemLink>
+            </NavigationSectionListItem>
+            <NavigationSectionListItem>
+              <NavigationSectionListItemLink href="">Recently Played</NavigationSectionListItemLink>
+            </NavigationSectionListItem>
+            <NavigationSectionListItem>
+              <NavigationSectionListItemLink href="">Liked Songs</NavigationSectionListItemLink>
+            </NavigationSectionListItem>
+            <NavigationSectionListItem>
+              <NavigationSectionListItemLink href="">Albums</NavigationSectionListItemLink>
+            </NavigationSectionListItem>
+            <NavigationSectionListItem>
+              <NavigationSectionListItemLink href="">Artists</NavigationSectionListItemLink>
+            </NavigationSectionListItem>
+            <NavigationSectionListItem>
+              <NavigationSectionListItemLink href="">Podcasts</NavigationSectionListItemLink>
+            </NavigationSectionListItem>
+          </NavigationSectionList>
+        </NavigationSection>
+
+        <NavigationSection>
+          <NavigationSectionHeader>PLAYLISTS</NavigationSectionHeader>
+
+          <NavigationSectionList>
+            <NavigationSectionListItem>
+              <NavigationSectionListItemLink href="">The Witcher</NavigationSectionListItemLink>
+            </NavigationSectionListItem>
+            <NavigationSectionListItem>
+              <NavigationSectionListItemLink href="">My Acoustic</NavigationSectionListItemLink>
+            </NavigationSectionListItem>
+          </NavigationSectionList>
+        </NavigationSection>
       </SideBar>
 
       <Home>
