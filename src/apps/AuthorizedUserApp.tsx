@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import SpotifyClientContext from '../context/SpotifyClientContext';
 import styled from 'styled-components';
 import SideBar from '../components/SideBar';
+import HomeView from '../components/HomeView';
 
 const Wrapper = styled.main`
   display: grid;
@@ -11,7 +12,7 @@ const Wrapper = styled.main`
   height: 100vh;
 `;
 
-const Home = styled.section`
+const MainSection = styled.section`
   grid-area: home;
 `;
 
@@ -24,10 +25,9 @@ const AuthorizedUserApp = () => {
   return (
     <Wrapper>
       <SideBar />
-      <Home>
-        Home
-        <h3>Hello {user?.display_name}</h3>
-      </Home>
+      <MainSection>
+        <HomeView />
+      </MainSection>
 
       <Player>player</Player>
     </Wrapper>
