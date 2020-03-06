@@ -43,6 +43,25 @@ const CardListBottom = styled.div`
   grid-column: 1/-1;
 `;
 
+const CardPlayButton = styled.button`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border: none;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  background: ${props => props.theme.colors.primary};
+  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background: ${props => props.theme.colors.primaryLight};
+    cursor: pointer;
+  }
+`;
+
 const Card = styled.section`
   flex-direction: column;
   display: flex;
@@ -50,6 +69,13 @@ const Card = styled.section`
   height: 100%;
   border-radius: 8px;
   background: #e6ddf3;
+
+  &:hover {
+    cursor: pointer;
+    ${CardPlayButton} {
+      opacity: 1;
+    }
+  }
 `;
 
 const CardImageWrapper = styled.div`
@@ -59,7 +85,6 @@ const CardImageWrapper = styled.div`
   position: relative;
   margin-bottom: 16px;
   background-color: #333;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
   box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
 `;
 
@@ -75,6 +100,7 @@ const CardImage = styled.img`
 `;
 
 const CardBottom = styled.div`
+  position: relative;
   min-height: 62px;
 `;
 
@@ -103,7 +129,6 @@ const CardDescriptionWrapper = styled.div`
   color: #6a226f;
   padding: 0;
   margin-top: 4px;
-  white-space: normal;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -124,6 +149,10 @@ const HomeView = () => {
         <CardDescriptionWrapper>
           <span>{description}</span>
         </CardDescriptionWrapper>
+
+        <CardPlayButton>
+          <i className="material-icons">play_arrow</i>
+        </CardPlayButton>
       </CardBottom>
     </Card>
   );
