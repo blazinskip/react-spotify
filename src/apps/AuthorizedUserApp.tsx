@@ -14,6 +14,7 @@ const Wrapper = styled.main`
 
 const MainSection = styled.section`
   grid-area: home;
+  padding: 0 24px;
 `;
 
 const Player = styled.section`
