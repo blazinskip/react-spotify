@@ -47,6 +47,9 @@ const CardPlayButton = styled.button`
   position: absolute;
   bottom: 0;
   right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
   border-radius: 50%;
   height: 40px;
