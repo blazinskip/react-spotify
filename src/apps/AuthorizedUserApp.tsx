@@ -3,6 +3,7 @@ import SpotifyClientContext from '../context/SpotifyClientContext';
 import styled from 'styled-components';
 import SideBar from '../components/SideBar';
 import HomeView from '../components/HomeView';
+import TopBarSection from '../components/TobBarSection';
 
 const Wrapper = styled.main`
   display: grid;
@@ -15,10 +16,22 @@ const Wrapper = styled.main`
 const MainSection = styled.section`
   grid-area: home;
   padding: 0 24px;
+
+  div {
+    position: sticky;
+    height: 60px;
+  }
 `;
 
 const Player = styled.section`
   grid-area: player;
+`;
+
+const TopBar = styled.div`
+  grid-area: home;
+  z-index: 2;
+  padding: 16px 24px;
+  height: 60px;
 `;
 
 const AuthorizedUserApp = () => {
@@ -26,7 +39,11 @@ const AuthorizedUserApp = () => {
   return (
     <Wrapper>
       <SideBar />
+      <TopBar>
+        <TopBarSection />
+      </TopBar>
       <MainSection>
+        <div />
         <HomeView />
       </MainSection>
 
