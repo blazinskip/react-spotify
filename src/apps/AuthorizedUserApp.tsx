@@ -8,7 +8,7 @@ import TopBarSection from '../components/TobBarSection';
 const Wrapper = styled.main`
   display: grid;
   grid-template-columns: 0.5fr 1fr 1fr;
-  grid-template-rows: 1fr 0.1fr;
+  grid-template-rows: 1fr 120px;
   grid-template-areas: 'sidebar home home' 'player player player';
   height: 100vh;
 `;
@@ -17,7 +17,7 @@ const MainSection = styled.section`
   grid-area: home;
   padding: 0 24px;
 
-  div {
+  div:first-child {
     position: sticky;
     height: 60px;
   }
