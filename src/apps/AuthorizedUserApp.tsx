@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import SideBar from '../components/SideBar';
 import HomeView from '../components/HomeView';
 import TopBarSection from '../components/TobBarSection';
+import Player from '../components/Player';
 
 const Wrapper = styled.main`
   display: grid;
   grid-template-columns: 0.5fr 1fr 1fr;
-  grid-template-rows: 1fr 120px;
+  grid-template-rows: 1fr 90px;
   grid-template-areas: 'sidebar home home' 'player player player';
   height: 100vh;
 `;
@@ -19,11 +20,11 @@ const MainSection = styled.section`
 
   div:first-child {
     position: sticky;
-    height: 60px;
+    height: 70px;
   }
 `;
 
-const Player = styled.section`
+const PlayerWrapper = styled.section`
   grid-area: player;
 `;
 
@@ -31,7 +32,7 @@ const TopBar = styled.div`
   grid-area: home;
   z-index: 2;
   padding: 16px 24px;
-  height: 60px;
+  height: 70px;
 `;
 
 const AuthorizedUserApp = () => {
@@ -47,7 +48,9 @@ const AuthorizedUserApp = () => {
         <HomeView />
       </MainSection>
 
-      <Player>player</Player>
+      <PlayerWrapper>
+        <Player />
+      </PlayerWrapper>
     </Wrapper>
   );
 };
