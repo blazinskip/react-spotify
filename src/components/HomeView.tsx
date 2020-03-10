@@ -138,6 +138,11 @@ const CardDescriptionWrapper = styled.div`
   -webkit-box-orient: vertical;
 `;
 
+const View = styled.div`
+  overflow-y: scroll;
+  max-height: calc(100vh - 180px);
+`;
+
 const HomeView = () => {
   const mapLastPlayedPlaylistToCard = ({ id, title, description, imageUrl }: LastPlayedPlaylist) => (
     <Card key={id}>
@@ -162,13 +167,50 @@ const HomeView = () => {
 
   return (
     <>
-      <CardList>
-        <CardListBottom>
-          <h2>Last Played</h2>
-        </CardListBottom>
+      <View>
+        <CardList>
+          <CardListBottom>
+            <h2>Last Played</h2>
+          </CardListBottom>
 
-        {lastPlayedPlaylists.map(mapLastPlayedPlaylistToCard)}
-      </CardList>
+          {lastPlayedPlaylists.map(mapLastPlayedPlaylistToCard)}
+        </CardList>
+        <CardList>
+          <CardListBottom>
+            <h2>Last Played</h2>
+          </CardListBottom>
+
+          {lastPlayedPlaylists.map(mapLastPlayedPlaylistToCard)}
+        </CardList>
+        <CardList>
+          <CardListBottom>
+            <h2>Last Played</h2>
+          </CardListBottom>
+
+          {lastPlayedPlaylists.map(mapLastPlayedPlaylistToCard)}
+        </CardList>
+        <CardList>
+          <CardListBottom>
+            <h2>Last Played</h2>
+          </CardListBottom>
+
+          {lastPlayedPlaylists.map(mapLastPlayedPlaylistToCard)}
+        </CardList>
+        <CardList>
+          <CardListBottom>
+            <h2>Last Played</h2>
+          </CardListBottom>
+
+          {lastPlayedPlaylists.map(mapLastPlayedPlaylistToCard)}
+        </CardList>
+        <CardList>
+          <CardListBottom>
+            <h2>Last Played</h2>
+          </CardListBottom>
+
+          {lastPlayedPlaylists.map(mapLastPlayedPlaylistToCard)}
+        </CardList>
+      </View>
     </>
   );
 };
