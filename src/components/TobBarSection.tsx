@@ -30,6 +30,21 @@ const NavigationButtonsWrapper = styled.div`
   }
 `;
 
+const SearchInput = styled.input`
+  font-size: 1rem;
+  padding: 0px 1rem;
+  border-radius: 300px;
+  border: 1px solid transparent;
+  background: #f6e6fd;
+  outline: none;
+  letter-spacing: 0.5px;
+  color: #3c3939;
+
+  &:focus {
+    box-shadow: 0 0 0 3px #74aaefd6;
+  }
+`;
+
 const TopBarSection = () => {
   return (
     <>
@@ -42,6 +57,8 @@ const TopBarSection = () => {
             <i className="material-icons">chevron_right</i>
           </button>
         </NavigationButtonsWrapper>
+
+        <SearchInput placeholder="Search for artists, songs..." type="search" />
       </Header>
     </>
   );
