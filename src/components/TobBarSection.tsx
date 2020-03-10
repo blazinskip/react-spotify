@@ -7,19 +7,25 @@ const Header = styled.header`
 
 const NavigationButtonsWrapper = styled.div`
   display: flex;
+
   button {
-    height: 26px;
-    width: 26px;
+    height: 38px;
+    width: 38px;
     justify-content: center;
     align-items: center;
     display: flex;
     background: transparent;
     border: none;
+    border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
 
+    .material-icons {
+      font-size: 2rem;
+    }
+
     &:hover {
-      background: red;
+      background: #f6e6fd;
     }
   }
 `;
