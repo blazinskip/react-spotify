@@ -140,7 +140,7 @@ const CardDescriptionWrapper = styled.div`
 
 const View = styled.div`
   overflow-y: scroll;
-  max-height: calc(100vh - 180px);
+  max-height: calc(100vh - 160px);
 `;
 
 const HomeView = () => {
