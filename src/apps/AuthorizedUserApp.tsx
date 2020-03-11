@@ -26,6 +26,7 @@ const MainSection = styled.section`
 
 const PlayerWrapper = styled.section`
   grid-area: player;
+  z-index: 10;
 `;
 
 const TopBar = styled.div`
