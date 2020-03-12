@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, { ReactElement, useContext } from 'react';
+import SpotifyClientContext from '../context/SpotifyClientContext';
+import { Playlist } from '../models';
 
 const SideBarSection = styled.section`
   padding: 0 1.5rem;
@@ -65,6 +67,14 @@ const NavigationSectionListItemLink = styled.a`
 `;
 
 const SideBar = () => {
+  const { playlists } = useContext(SpotifyClientContext);
+
+  const mapPlaylistToPlaylistLink = ({ id, name }: Playlist): ReactElement => (
+    <NavigationSectionListItem key={id}>
+      <NavigationSectionListItemLink href="">{name}</NavigationSectionListItemLink>
+    </NavigationSectionListItem>
+  );
+
   return (
     <SideBarSection>
       <MainNavigationList>
@@ -108,14 +118,7 @@ const SideBar = () => {
       <NavigationSection>
         <NavigationSectionHeader>PLAYLISTS</NavigationSectionHeader>
 
-        <NavigationSectionList>
-          <NavigationSectionListItem>
-            <NavigationSectionListItemLink href="">The Witcher</NavigationSectionListItemLink>
-          </NavigationSectionListItem>
-          <NavigationSectionListItem>
-            <NavigationSectionListItemLink href="">My Acoustic</NavigationSectionListItemLink>
-          </NavigationSectionListItem>
-        </NavigationSectionList>
+        <NavigationSectionList>{playlists.length && playlists.map(mapPlaylistToPlaylistLink)}</NavigationSectionList>
       </NavigationSection>
     </SideBarSection>
   );

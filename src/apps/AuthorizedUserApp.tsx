@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import SpotifyClientContext from '../context/SpotifyClientContext';
+import React from 'react';
 import styled from 'styled-components';
 import SideBar from '../components/SideBar';
 import HomeView from '../components/HomeView';
@@ -37,7 +36,6 @@ const TopBar = styled.div`
 `;
 
 const AuthorizedUserApp = () => {
-  const { user } = useContext(SpotifyClientContext);
   return (
     <Wrapper>
       <SideBar />

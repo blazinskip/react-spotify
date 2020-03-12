@@ -1,11 +1,12 @@
 import React from 'react';
-import { User } from '../models';
+import { Playlist, User } from '../models';
 
 const spotifyTokens = {
   token: '',
   tokenType: '',
   user: null,
-} as { token: string | null; tokenType: string | null; user: null | User };
+  playlists: [],
+} as { token: string | null; tokenType: string | null; user: null | User; playlists: Playlist[] };
 
 const SpotifyClientContext = React.createContext(spotifyTokens);
 
