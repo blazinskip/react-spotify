@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "@types/react-html-parser": "^2.0.1",
+    "@types/spotify-web-playback-sdk": "^0.1.7",
     "@types/styled-components": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",

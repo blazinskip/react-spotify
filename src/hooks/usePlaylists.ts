@@ -15,6 +15,14 @@ export function usePlaylists(): [Playlist[]] {
             Authorization: `${tokenType} ${token}`,
           },
         });
+        for (const itemsKey of data.items) {
+          axios(`https://api.spotify.com/v1/playlists/${(itemsKey as Playlist).id}`, {
+            headers: {
+              Authorization: `${tokenType} ${token}`,
+            },
+          });
+        }
+
         setPlaylists(() => [...data.items]);
       } else {
         setPlaylists(() => []);

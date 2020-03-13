@@ -32,7 +32,14 @@ const Header = styled('h1')`
 const SpotifyLoginView = () => {
   const clientId = '484853b958a34028b3c174c9588314b3';
   const redirectUri = 'http://localhost:3000';
-  const scopes = ['playlist-read-private', 'user-read-private'];
+  const scopes = [
+    'playlist-read-private',
+    'streaming',
+    'user-read-email',
+    ,
+    'user-read-private',
+    'user-modify-playback-state',
+  ];
 
   const href =
     'https://accounts.spotify.com/authorize' +
