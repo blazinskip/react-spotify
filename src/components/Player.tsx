@@ -74,6 +74,38 @@ const RightSection = styled.div``;
 type Props = {};
 
 const Player: FunctionComponent<Props> = () => {
+  const player = new Spotify.Player({
+    name: 'Web Playback SDK Template',
+    getOAuthToken: cb => {
+      cb(localStorage.getItem('token') || '');
+    },
+  });
+
+  // Error handling
+  player.on('initialization_error', e => console.error(e));
+  player.on('authentication_error', e => console.error(e));
+  player.on('account_error', e => console.error(e));
+  player.on('playback_error', e => console.error(e));
+
+  function play(deviceId: string) {
+    fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
+      method: 'PUT',
+      body: JSON.stringify({ uris: ['spotify:track:2KMLGJ1mPfRE4GNdL92rl3'] }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+  }
+
+  player.on('ready', data => {
+    console.log('Ready with Device ID', data.device_id);
+
+    // Play a track using our new device ID
+    play(data.device_id);
+  });
+  player.connect();
+
   return (
     <PlayerWrapper>
       <LeftSection>
