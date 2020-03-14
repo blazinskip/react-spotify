@@ -30,14 +30,15 @@ const Header = styled('h1')`
 `;
 
 const SpotifyLoginView = () => {
-  const clientId = '484853b958a34028b3c174c9588314b3';
+  const clientId = '725c560413294b43bbae466062fae874';
   const redirectUri = 'http://localhost:3000';
   const scopes = [
     'playlist-read-private',
     'streaming',
     'user-read-email',
-    ,
     'user-read-private',
+    'user-read-currently-playing',
+    'user-read-playback-state',
     'user-modify-playback-state',
   ];
 

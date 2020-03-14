@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const PlayerWrapper = styled.div`
@@ -74,37 +74,55 @@ const RightSection = styled.div``;
 type Props = {};
 
 const Player: FunctionComponent<Props> = () => {
-  const player = new Spotify.Player({
-    name: 'Web Playback SDK Template',
-    getOAuthToken: cb => {
-      cb(localStorage.getItem('token') || '');
-    },
-  });
+  const [player, setPlayer] = useState<null | Spotify.SpotifyPlayer>(null);
+  const [deviceId, setDeviceId] = useState<string>('');
 
-  // Error handling
-  player.on('initialization_error', e => console.error(e));
-  player.on('authentication_error', e => console.error(e));
-  player.on('account_error', e => console.error(e));
-  player.on('playback_error', e => console.error(e));
+  const addPlayer = () => {
+    console.log('addPlayer');
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      console.log('onSpotifyWebPlaybackSDKReady');
 
-  function play(deviceId: string) {
-    fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
-      method: 'PUT',
-      body: JSON.stringify({ uris: ['spotify:track:2KMLGJ1mPfRE4GNdL92rl3'] }),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-  }
+      const player = new window.Spotify.Player({
+        name: 'Web Playback SDK Template',
+        getOAuthToken: cb => {
+          cb(localStorage.getItem('token') || '');
+        },
+      });
 
-  player.on('ready', data => {
-    console.log('Ready with Device ID', data.device_id);
+      function play(deviceId: string) {
+        fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
+          method: 'PUT',
+          // eslint-disable-next-line @typescript-eslint/camelcase
+          body: JSON.stringify({ context_uri: 'spotify:playlist:2Hs1llVpLnMR3QEETRxDVb' }),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+      }
 
-    // Play a track using our new device ID
-    play(data.device_id);
-  });
-  player.connect();
+      player.on('ready', data => {
+        console.log('Ready with Device ID', data.device_id);
+        setDeviceId(() => data.device_id);
+
+        // Play a track using our new device ID
+        play(data.device_id);
+      });
+      player.connect();
+      setPlayer(() => player);
+    };
+  };
+
+  const addScript = () => {
+    const script = document.createElement('script');
+    script.src = 'https://sdk.scdn.co/spotify-player.js';
+    document.body.appendChild(script);
+  };
+
+  useEffect(() => {
+    addPlayer();
+    addScript();
+  }, []);
 
   return (
     <PlayerWrapper>
@@ -123,13 +141,13 @@ const Player: FunctionComponent<Props> = () => {
           <button>
             <i className="material-icons">replay_5</i>
           </button>
-          <button>
+          <button onClick={() => player?.previousTrack()}>
             <i className="material-icons">skip_previous</i>
           </button>
-          <button>
+          <button onClick={() => player?.togglePlay()}>
             <i className="material-icons">play_circle_outline</i>
           </button>
-          <button>
+          <button onClick={() => player?.nextTrack()}>
             <i className="material-icons">skip_next</i>
           </button>
           <button>
