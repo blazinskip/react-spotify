@@ -5,7 +5,11 @@ export interface Playlist {
   href: string;
   uri: string;
   images: { url: string }[];
+  owner: {
+    id: string;
+    display_name: string;
+  };
   tracks: {
-    items: any[];
+    items: { track: { id: string; name: string; duration_ms: number } }[];
   };
 }
