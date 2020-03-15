@@ -1,10 +1,12 @@
 import axios from 'axios';
 
 class PlayerApi {
-  playPlaylist(playlistUri: string, deviceId: string) {
+  playPlaylist(playlistUri: string, deviceId: string, offset = 0) {
+    // TODO remove deviceId it is not required
     axios.put(
       `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
       {
+        offset: { position: offset },
         // eslint-disable-next-line @typescript-eslint/camelcase
         context_uri: playlistUri,
       },
