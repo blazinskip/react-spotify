@@ -6,7 +6,16 @@ const spotifyTokens = {
   tokenType: '',
   user: null,
   playlists: [],
-} as { token: string | null; tokenType: string | null; user: null | User; playlists: Playlist[] };
+  player: null,
+  deviceId: '',
+} as {
+  token: string | null;
+  tokenType: string | null;
+  user: null | User;
+  playlists: Playlist[];
+  player: null | Spotify.SpotifyPlayer;
+  deviceId: string;
+};
 
 const SpotifyClientContext = React.createContext(spotifyTokens);
 

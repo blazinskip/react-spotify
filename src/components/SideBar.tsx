@@ -71,7 +71,7 @@ const SideBar = () => {
 
   const mapPlaylistToPlaylistLink = ({ id, name }: Playlist): ReactElement => (
     <NavigationSectionListItem key={id}>
-      <NavigationSectionListItemLink href="">{name}</NavigationSectionListItemLink>
+      <NavigationSectionListItemLink href={''}>{name}</NavigationSectionListItemLink>
     </NavigationSectionListItem>
   );
 
