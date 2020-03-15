@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import SpotifyClientContext from '../context/SpotifyClientContext';
-import { useGetUserMe, usePlaylists } from '../hooks';
+import { useGetUserMe, usePlaylists, useSpotifyPlayer } from '../hooks';
 
 const SpotifyWrapper = ({ children }: PropsWithChildren<{}>) => {
   const params = window.location.hash
@@ -18,16 +18,20 @@ const SpotifyWrapper = ({ children }: PropsWithChildren<{}>) => {
 
   const [user] = useGetUserMe();
   const [playlists] = usePlaylists();
+  const { player, deviceId } = useSpotifyPlayer();
+
   const [context, setContext] = useState({
     token: localStorage.getItem('token'),
     tokenType: localStorage.getItem('tokenType'),
     user,
     playlists,
+    player,
+    deviceId,
   });
 
   useEffect(() => {
-    setContext(state => ({ ...state, user, playlists }));
-  }, [user, playlists]);
+    setContext(state => ({ ...state, user, playlists, player, deviceId }));
+  }, [user, playlists, player, deviceId]);
 
   return <SpotifyClientContext.Provider value={context}>{children}</SpotifyClientContext.Provider>;
 };
