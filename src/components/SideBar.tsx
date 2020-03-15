@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React, { ReactElement, useContext } from 'react';
 import SpotifyClientContext from '../context/SpotifyClientContext';
 import { Playlist } from '../models';
+import { Link } from 'react-router-dom';
 
 const SideBarSection = styled.section`
   padding: 0 1.5rem;
@@ -53,7 +54,7 @@ const NavigationSectionListItem = styled.li`
   padding-left: 0;
 `;
 
-const NavigationSectionListItemLink = styled.a`
+const NavigationSectionListItemLink = styled(Link)`
   flex-basis: 100%;
   padding: ${props => props.theme.spacing[props.theme.links.padding]} 0;
   color: ${props => props.theme.colors[props.theme.links.color]};
@@ -71,7 +72,7 @@ const SideBar = () => {
 
   const mapPlaylistToPlaylistLink = ({ id, name }: Playlist): ReactElement => (
     <NavigationSectionListItem key={id}>
-      <NavigationSectionListItemLink href={''}>{name}</NavigationSectionListItemLink>
+      <NavigationSectionListItemLink to={`/playlist/${id}`}>{name}</NavigationSectionListItemLink>
     </NavigationSectionListItem>
   );
 
@@ -95,22 +96,22 @@ const SideBar = () => {
 
         <NavigationSectionList>
           <NavigationSectionListItem>
-            <NavigationSectionListItemLink href="">Made For You</NavigationSectionListItemLink>
+            <NavigationSectionListItemLink to={`/playlist/id`}>Made For You</NavigationSectionListItemLink>
           </NavigationSectionListItem>
           <NavigationSectionListItem>
-            <NavigationSectionListItemLink href="">Recently Played</NavigationSectionListItemLink>
+            <NavigationSectionListItemLink to={`/playlist/id`}>Recently Played</NavigationSectionListItemLink>
           </NavigationSectionListItem>
           <NavigationSectionListItem>
-            <NavigationSectionListItemLink href="">Liked Songs</NavigationSectionListItemLink>
+            <NavigationSectionListItemLink to={`/playlist/id`}>Liked Songs</NavigationSectionListItemLink>
           </NavigationSectionListItem>
           <NavigationSectionListItem>
-            <NavigationSectionListItemLink href="">Albums</NavigationSectionListItemLink>
+            <NavigationSectionListItemLink to={`/playlist/id`}>Albums</NavigationSectionListItemLink>
           </NavigationSectionListItem>
           <NavigationSectionListItem>
-            <NavigationSectionListItemLink href="">Artists</NavigationSectionListItemLink>
+            <NavigationSectionListItemLink to={`/playlist/id`}>Artists</NavigationSectionListItemLink>
           </NavigationSectionListItem>
           <NavigationSectionListItem>
-            <NavigationSectionListItemLink href="">Podcasts</NavigationSectionListItemLink>
+            <NavigationSectionListItemLink to={`/playlist/id`}>Podcasts</NavigationSectionListItemLink>
           </NavigationSectionListItem>
         </NavigationSectionList>
       </NavigationSection>

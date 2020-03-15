@@ -4,6 +4,8 @@ import SideBar from '../components/SideBar';
 import HomeView from '../components/HomeView';
 import TopBarSection from '../components/TobBarSection';
 import Player from '../components/Player';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import PlaylistPage from '../components/PlaylistPage';
 
 const Wrapper = styled.main`
   display: grid;
@@ -37,20 +39,28 @@ const TopBar = styled.div`
 
 const AuthorizedUserApp = () => {
   return (
-    <Wrapper>
-      <SideBar />
-      <TopBar>
-        <TopBarSection />
-      </TopBar>
-      <MainSection>
-        <div />
-        <HomeView />
-      </MainSection>
+    <BrowserRouter>
+      <Wrapper>
+        <SideBar />
+        <TopBar>
+          <TopBarSection />
+        </TopBar>
+        <MainSection>
+          <div />
 
-      <PlayerWrapper>
-        <Player />
-      </PlayerWrapper>
-    </Wrapper>
+          <Switch>
+            <Route exact path={'/playlist/:id'} component={PlaylistPage} />
+            <Route exact path="/">
+              <HomeView />
+            </Route>
+          </Switch>
+        </MainSection>
+
+        <PlayerWrapper>
+          <Player />
+        </PlayerWrapper>
+      </Wrapper>
+    </BrowserRouter>
   );
 };
 
