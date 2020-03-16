@@ -19,7 +19,7 @@ const MainSection = styled.section`
   grid-area: home;
   padding: 0 24px;
 
-  div:first-child {
+  & > div:first-child {
     position: sticky;
     height: 70px;
   }
