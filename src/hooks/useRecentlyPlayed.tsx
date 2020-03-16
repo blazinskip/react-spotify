@@ -16,7 +16,7 @@ export function useRecentlyPlayed(): { albums: Album[] } {
           },
         });
 
-        const recentlyPlayedAlbmus = Array.from(
+        const recentlyPlayedAlbums = Array.from(
           new Set<string>(
             data.items
               .map((item: any) => item.track.album)
@@ -25,7 +25,7 @@ export function useRecentlyPlayed(): { albums: Album[] } {
           ),
         ).map((value: string) => JSON.parse(value));
 
-        setAlbums(() => [...recentlyPlayedAlbmus]);
+        setAlbums(() => [...recentlyPlayedAlbums.slice(0, Math.min(6, recentlyPlayedAlbums.length))]);
       } else {
         setAlbums(() => []);
       }
