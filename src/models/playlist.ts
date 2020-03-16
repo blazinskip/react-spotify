@@ -10,6 +10,14 @@ export interface Playlist {
     display_name: string;
   };
   tracks: {
-    items: { track: { id: string; name: string; duration_ms: number } }[];
+    items: {
+      track: {
+        id: string;
+        name: string;
+        description: string;
+        duration_ms: number;
+        artists: { id: string; name: string }[];
+      };
+    }[];
   };
 }
