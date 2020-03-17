@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
+import React, { FunctionComponent, useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { usePlaylistById } from '../hooks';
 import styled from 'styled-components';
@@ -6,6 +6,7 @@ import playerApi from '../api/player.api';
 import SpotifyClientContext from '../context/SpotifyClientContext';
 import { msToMinutesAndSeconds } from '../utils';
 import { BasePrimaryButton } from '../styles';
+import { PlayerTrack } from '../models';
 
 const PlaylistPageWrapper = styled.div`
   display: flex;
@@ -29,11 +30,6 @@ const PlaylistTracks = styled.section`
   padding: 1rem;
 `;
 
-const PlaylistTrack = styled.div<{ currentTrack: boolean }>`
-  display: flex;
-  padding: 0.5rem;
-`;
-
 const PlaylistTractInfoWrapper = styled.div`
   align-items: start;
   flex-direction: column;
@@ -50,15 +46,41 @@ const PlayTrackButton = styled.button`
   border: 1px solid transparent;
 `;
 
+const TrackName = styled.span``;
+
+const PlaylistTrack = styled.div<{ currentTrack?: boolean }>`
+  display: flex;
+  padding: 0.5rem;
+  transition: background-color 0.2s ease-in-out;
+
+  ${TrackName} {
+    transition: color 0.3s ease-in-out;
+    color: ${props => (props.currentTrack ? props.theme.colors.greenDark : 'initial')};
+  }
+
+  ${PlayTrackButton} {
+    transition: color 0.3s ease-in-out;
+    color: ${props => (props.currentTrack ? props.theme.colors.greenDark : 'initial')};
+  }
+
+  &:hover {
+    background: #f6e6fd;
+  }
+`;
+
 const PlaylistPage: FunctionComponent = () => {
   const { id } = useParams();
   const [currentTrackId, setCurrentTrackId] = useState('');
   const { playlist } = usePlaylistById(id);
   const { deviceId, player } = useContext(SpotifyClientContext);
 
-  player?.on('player_state_changed', ({ track_window: { current_track } }) => {
-    console.log(current_track);
-    setCurrentTrackId(() => current_track.id as string);
+  player?.on('player_state_changed', ({ track_window: { current_track } }: Spotify.PlaybackState) => {
+    const {
+      id,
+      linked_from: { id: linkedFromId },
+    } = current_track as PlayerTrack;
+
+    setCurrentTrackId(() => linkedFromId ?? id);
   });
 
   if (playlist) {
@@ -78,17 +100,17 @@ const PlaylistPage: FunctionComponent = () => {
             if (item.track.id === currentTrackId) {
               return (
                 <PlaylistTrack
-                  currentTrack={currentTrackId === item.track.id}
+                  key={item.track.id}
+                  currentTrack
                   onDoubleClick={() => playerApi.playPlaylist(playlist?.uri, deviceId, index)}
                 >
-                  <PlayTrackButton onClick={() => playerApi.playPlaylist(playlist?.uri, deviceId, index)}>
+                  <PlayTrackButton onClick={() => player?.pause()}>
                     <i className="material-icons">pause</i>
                   </PlayTrackButton>
 
                   <PlaylistTractInfoWrapper>
-                    <span>{item?.track?.name ?? ''}</span>
-                    <div></div>
-                    <span> {item.track.artists.map(artist => artist.name).join(' - ')}</span>
+                    <TrackName>{item?.track?.name ?? ''}</TrackName>
+                    <span>{item.track.artists.map(artist => artist.name).join(' - ')}</span>
                   </PlaylistTractInfoWrapper>
 
                   <TrackDuration>{msToMinutesAndSeconds(item?.track?.duration_ms)}</TrackDuration>
@@ -97,7 +119,7 @@ const PlaylistPage: FunctionComponent = () => {
             } else {
               return (
                 <PlaylistTrack
-                  currentTrack={currentTrackId === item.track.id}
+                  key={item.track.id}
                   onDoubleClick={() => playerApi.playPlaylist(playlist?.uri, deviceId, index)}
                 >
                   <PlayTrackButton onClick={() => playerApi.playPlaylist(playlist?.uri, deviceId, index)}>
@@ -105,8 +127,7 @@ const PlaylistPage: FunctionComponent = () => {
                   </PlayTrackButton>
 
                   <PlaylistTractInfoWrapper>
-                    <span>{item?.track?.name ?? ''}</span>
-                    <div></div>
+                    <TrackName>{item?.track?.name ?? ''}</TrackName>
                     <span> {item.track.artists.map(artist => artist.name).join(' - ')}</span>
                   </PlaylistTractInfoWrapper>
 

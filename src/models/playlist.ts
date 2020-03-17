@@ -13,6 +13,7 @@ export interface Playlist {
     items: {
       track: {
         id: string;
+        uri: string;
         name: string;
         description: string;
         duration_ms: number;
