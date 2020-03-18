@@ -23,6 +23,15 @@ const PlaylistInfo = styled.section`
   padding: 1rem;
 `;
 
+const PlaylistName = styled.h2`
+  margin-bottom: 0;
+`;
+
+const PlaylistAuthor = styled.span`
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+`;
+
 const PlaylistTracks = styled.section`
   flex-basis: 75%;
   overflow-y: scroll;
@@ -88,8 +97,8 @@ const PlaylistPage: FunctionComponent = () => {
       <PlaylistPageWrapper>
         <PlaylistInfo>
           <img src={playlist?.images[0]?.url ?? ''} alt={'Album image'} />
-          <h2>{playlist?.name}</h2>
-          <span>{playlist?.owner.display_name}</span>
+          <PlaylistName>{playlist?.name}</PlaylistName>
+          <PlaylistAuthor>{playlist?.owner.display_name}</PlaylistAuthor>
           <BasePrimaryButton onClick={() => playerApi.playPlaylist(playlist?.uri, deviceId)}>PLAY</BasePrimaryButton>
           <p>{playlist?.description}</p>
 
