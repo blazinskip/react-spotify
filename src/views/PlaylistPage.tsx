@@ -7,6 +7,7 @@ import SpotifyClientContext from '../context/SpotifyClientContext';
 import { msToMinutesAndSeconds } from '../utils';
 import { BasePrimaryButton } from '../styles';
 import { PlayerTrack } from '../models';
+import BaseLoading from '../components/BaseLoading';
 
 const PlaylistPageWrapper = styled.div`
   display: flex;
@@ -149,7 +150,7 @@ const PlaylistPage: FunctionComponent = () => {
       </PlaylistPageWrapper>
     );
   } else {
-    return <div>Loading...</div>;
+    return <BaseLoading />;
   }
 };
 
