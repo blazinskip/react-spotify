@@ -5,7 +5,7 @@ import HomeView from '../components/HomeView';
 import TopBarSection from '../components/TobBarSection';
 import Player from '../components/Player';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import PlaylistPage from '../views/PlaylistPage';
+import PlaylistView from '../views/PlaylistView';
 
 const Wrapper = styled.main`
   display: grid;
@@ -49,7 +49,7 @@ const AuthorizedUserApp = () => {
           <div />
 
           <Switch>
-            <Route exact path={'/playlist/:id'} component={PlaylistPage} />
+            <Route exact path={'/playlist/:id'} component={PlaylistView} />
             <Route exact path="/">
               <HomeView />
             </Route>
