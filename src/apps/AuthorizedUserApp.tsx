@@ -5,7 +5,7 @@ import HomeView from '../components/HomeView';
 import TopBarSection from '../components/TobBarSection';
 import Player from '../components/Player';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import PlaylistPage from '../components/PlaylistPage';
+import PlaylistPage from '../views/PlaylistPage';
 
 const Wrapper = styled.main`
   display: grid;
