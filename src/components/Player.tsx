@@ -75,7 +75,7 @@ const RightSection = styled.div``;
 type Props = {};
 
 const Player: FunctionComponent<Props> = () => {
-  const { player } = useContext(SpotifyClientContext);
+  const { player, paused } = useContext(SpotifyClientContext);
 
   return (
     <PlayerWrapper>
@@ -97,9 +97,15 @@ const Player: FunctionComponent<Props> = () => {
           <button onClick={() => player?.previousTrack()}>
             <i className="material-icons">skip_previous</i>
           </button>
-          <button onClick={() => player?.togglePlay()}>
-            <i className="material-icons">play_circle_outline</i>
-          </button>
+          {paused ? (
+            <button onClick={() => player?.resume()}>
+              <i className="material-icons">play_arrow</i>
+            </button>
+          ) : (
+            <button onClick={() => player?.pause()}>
+              <i className="material-icons">pause</i>
+            </button>
+          )}
           <button onClick={() => player?.nextTrack()}>
             <i className="material-icons">skip_next</i>
           </button>

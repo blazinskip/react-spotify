@@ -8,6 +8,7 @@ const spotifyTokens = {
   playlists: [],
   player: null,
   deviceId: '',
+  paused: false,
 } as {
   token: string | null;
   tokenType: string | null;
@@ -15,6 +16,7 @@ const spotifyTokens = {
   playlists: Playlist[];
   player: null | Spotify.SpotifyPlayer;
   deviceId: string;
+  paused: boolean;
 };
 
 const SpotifyClientContext = React.createContext(spotifyTokens);
