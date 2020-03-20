@@ -8,4 +8,5 @@ export interface Context {
   player: null | Spotify.SpotifyPlayer;
   deviceId: string;
   paused: boolean;
+  playUri: ({ deviceId: deviceId1, offset, uri }: { uri: string; deviceId: string; offset?: number }) => void;
 }
