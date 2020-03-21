@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useRecentlyPlayed } from '../hooks';
 import { Album } from '../models';
-import playerApi from '../api/player.api';
 import SpotifyClientContext from '../context/SpotifyClientContext';
 
 export interface LastPlayedPlaylist {
@@ -149,7 +148,7 @@ const View = styled.div`
 
 const HomeView = () => {
   const { albums } = useRecentlyPlayed();
-  const { deviceId } = useContext(SpotifyClientContext);
+  const { playUri } = useContext(SpotifyClientContext);
 
   const mapLastPlayedPlaylistToCard = ({ id, title, description, imageUrl }: LastPlayedPlaylist) => (
     <Card key={id}>
@@ -183,7 +182,7 @@ const HomeView = () => {
           <CardHeader>{album.name}</CardHeader>
         </CardHeaderLink>
 
-        <CardPlayButton onClick={() => playerApi.playPlaylist(album.uri, deviceId)}>
+        <CardPlayButton onClick={() => playUri({ uri: album.uri })}>
           <i className="material-icons">play_arrow</i>
         </CardPlayButton>
       </CardBottom>
