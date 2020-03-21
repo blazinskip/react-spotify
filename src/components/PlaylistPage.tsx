@@ -3,6 +3,7 @@ import { BasePrimaryButton } from '../styles';
 import { msToMinutesAndSeconds } from '../utils';
 import React, { FunctionComponent } from 'react';
 import { Playlist } from '../models';
+import { PlayUriFunction } from '../context';
 
 const PlaylistPageWrapper = styled.div`
   display: flex;
@@ -76,27 +77,20 @@ const PlaylistTrack = styled.div<{ currentTrack?: boolean }>`
 interface PlaylistProps {
   playlist: Playlist;
   currentTrackId: string;
-  playPlaylist: Function;
-  playTrackInPlaylist: Function;
+  playUri: PlayUriFunction;
   pausePlaylist: Function;
 }
 
 type Props = PlaylistProps;
 
-const PlaylistPage: FunctionComponent<Props> = ({
-  playlist,
-  currentTrackId,
-  playPlaylist,
-  playTrackInPlaylist,
-  pausePlaylist,
-}: Props) => {
+const PlaylistPage: FunctionComponent<Props> = ({ playlist, currentTrackId, playUri, pausePlaylist }: Props) => {
   return (
     <PlaylistPageWrapper>
       <PlaylistInfo>
         <img src={playlist?.images[0]?.url ?? ''} alt={'Album'} />
         <PlaylistName>{playlist?.name}</PlaylistName>
         <PlaylistAuthor>{playlist?.owner.display_name}</PlaylistAuthor>
-        <BasePrimaryButton onClick={() => playPlaylist}>PLAY</BasePrimaryButton>
+        <BasePrimaryButton onClick={() => playUri({ uri: playlist.uri })}>PLAY</BasePrimaryButton>
         <p>{playlist?.description}</p>
 
         <span>{playlist?.tracks.items.length} Tracks</span>
@@ -105,7 +99,11 @@ const PlaylistPage: FunctionComponent<Props> = ({
         {playlist?.tracks.items.map((item, index) => {
           if (item.track.id === currentTrackId) {
             return (
-              <PlaylistTrack key={item.track.id} currentTrack onDoubleClick={() => playTrackInPlaylist(index)}>
+              <PlaylistTrack
+                key={item.track.id}
+                currentTrack
+                onDoubleClick={() => playUri({ uri: playlist.uri, offset: index })}
+              >
                 <PlayTrackButton onClick={() => pausePlaylist}>
                   <i className="material-icons">pause</i>
                 </PlayTrackButton>
@@ -120,8 +118,8 @@ const PlaylistPage: FunctionComponent<Props> = ({
             );
           } else {
             return (
-              <PlaylistTrack key={item.track.id} onDoubleClick={() => playTrackInPlaylist(index)}>
-                <PlayTrackButton onClick={() => playTrackInPlaylist(index)}>
+              <PlaylistTrack key={item.track.id} onDoubleClick={() => playUri({ uri: playlist.uri, offset: index })}>
+                <PlayTrackButton onClick={() => playUri({ uri: playlist.uri, offset: index })}>
                   <i className="material-icons">play_arrow</i>
                 </PlayTrackButton>
 

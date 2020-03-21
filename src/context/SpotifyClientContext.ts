@@ -1,17 +1,6 @@
 import React from 'react';
-import { Playlist, User } from '../models';
 import { Context } from './context';
 
-const spotifyTokens = {
-  token: '',
-  tokenType: '',
-  user: null,
-  playlists: [],
-  player: null,
-  deviceId: '',
-  paused: false,
-} as Context;
-
-const SpotifyClientContext = React.createContext(spotifyTokens);
+const SpotifyClientContext = React.createContext<Context>((null as unknown) as Context);
 
 export default SpotifyClientContext;
