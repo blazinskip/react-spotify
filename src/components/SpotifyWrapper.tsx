@@ -35,18 +35,24 @@ const SpotifyWrapper = ({ children }: PropsWithChildren<{}>) => {
     });
   });
 
-  const playUri = (options: PlayUriOptions) => {
-    const { uri, offset } = options;
-    playerApi.playUri({ uri, offset, deviceId });
-  };
+  const playUri = ({ uri, offset }: PlayUriOptions) => playerApi.playUri({ uri, offset, deviceId });
+  const resumePlayer = () => player?.resume();
+  const pausePlayer = () => player?.pause();
+  const playNextTrack = () => player?.nextTrack();
+  const playPreviousTrack = () => player?.previousTrack();
 
   const [context, setContext] = useState<Context>({
     user,
     playlists,
-    player,
     deviceId,
-    playUri,
     playerState,
+    playerFunctions: {
+      playUri,
+      resumePlayer,
+      pausePlayer,
+      playNextTrack,
+      playPreviousTrack,
+    },
   });
 
   useEffect(() => {
@@ -56,8 +62,14 @@ const SpotifyWrapper = ({ children }: PropsWithChildren<{}>) => {
       playlists,
       player,
       deviceId,
-      playUri,
       playerState,
+      playerFunctions: {
+        playUri,
+        resumePlayer,
+        pausePlayer,
+        playNextTrack,
+        playPreviousTrack,
+      },
     }));
   }, [user, playlists, player, deviceId, playerState]);
 

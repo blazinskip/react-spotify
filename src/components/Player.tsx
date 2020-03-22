@@ -76,8 +76,8 @@ type Props = {};
 
 const Player: FunctionComponent<Props> = () => {
   const {
-    player,
     playerState: { paused },
+    playerFunctions: { playPreviousTrack, resumePlayer, pausePlayer, playNextTrack },
   } = useContext(SpotifyClientContext);
 
   return (
@@ -97,19 +97,19 @@ const Player: FunctionComponent<Props> = () => {
           <button>
             <i className="material-icons">replay_5</i>
           </button>
-          <button onClick={() => player?.previousTrack()}>
+          <button onClick={() => playPreviousTrack()}>
             <i className="material-icons">skip_previous</i>
           </button>
           {paused ? (
-            <button onClick={() => player?.resume()}>
+            <button onClick={() => resumePlayer()}>
               <i className="material-icons">play_arrow</i>
             </button>
           ) : (
-            <button onClick={() => player?.pause()}>
+            <button onClick={() => pausePlayer()}>
               <i className="material-icons">pause</i>
             </button>
           )}
-          <button onClick={() => player?.nextTrack()}>
+          <button onClick={() => playNextTrack()}>
             <i className="material-icons">skip_next</i>
           </button>
           <button>

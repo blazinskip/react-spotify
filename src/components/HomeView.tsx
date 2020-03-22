@@ -148,7 +148,9 @@ const View = styled.div`
 
 const HomeView = () => {
   const { albums } = useRecentlyPlayed();
-  const { playUri } = useContext(SpotifyClientContext);
+  const {
+    playerFunctions: { playUri },
+  } = useContext(SpotifyClientContext);
 
   const mapLastPlayedPlaylistToCard = ({ id, title, description, imageUrl }: LastPlayedPlaylist) => (
     <Card key={id}>
