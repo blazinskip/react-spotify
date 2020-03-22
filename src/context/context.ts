@@ -1,17 +1,15 @@
-import { Playlist, User } from '../models';
+import { Playlist } from '../models';
 import {
-  ResumePlayerFunction,
-  PlayUriFunction,
   PausePlayerFunction,
   PlayNextTrackFunction,
   PlayPreviousTrackFunction,
+  PlayUriFunction,
+  ResumePlayerFunction,
 } from './types';
 import { PlayerState } from './models';
 
 export interface Context {
-  user: null | User;
-  playlists: Playlist[];
-  deviceId: string;
+  readonly playlists: Playlist[];
   readonly playerState: PlayerState;
   readonly playerFunctions: {
     readonly playUri: PlayUriFunction;
