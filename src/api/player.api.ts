@@ -9,7 +9,6 @@ class PlayerApi {
       `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
       {
         offset: { position: offset },
-        // eslint-disable-next-line @typescript-eslint/camelcase
         context_uri: uri,
       },
       {

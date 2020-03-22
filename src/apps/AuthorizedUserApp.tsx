@@ -4,8 +4,10 @@ import SideBar from '../components/SideBar';
 import HomeView from '../components/HomeView';
 import TopBarSection from '../components/TobBarSection';
 import Player from '../components/Player';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import PlaylistView from '../views/PlaylistView';
+import ContextProvider from '../context/ContextProvider';
+import { useSpotifyPlayer } from '../hooks';
 
 const Wrapper = styled.main`
   display: grid;
@@ -38,30 +40,38 @@ const TopBar = styled.div`
 `;
 
 const AuthorizedUserApp = () => {
-  return (
-    <BrowserRouter>
-      <Wrapper>
-        <SideBar />
-        <TopBar>
-          <TopBarSection />
-        </TopBar>
-        <MainSection>
-          <div />
+  const { player, deviceId } = useSpotifyPlayer();
 
-          <Switch>
-            <Route exact path={'/playlist/:id'} component={PlaylistView} />
-            <Route exact path="/">
-              <HomeView />
-            </Route>
-          </Switch>
-        </MainSection>
+  if (player && deviceId) {
+    return (
+      <ContextProvider player={player} deviceId={deviceId}>
+        <BrowserRouter>
+          <Wrapper>
+            <SideBar />
+            <TopBar>
+              <TopBarSection />
+            </TopBar>
+            <MainSection>
+              <div />
 
-        <PlayerWrapper>
-          <Player />
-        </PlayerWrapper>
-      </Wrapper>
-    </BrowserRouter>
-  );
+              <Switch>
+                <Route exact path={'/playlist/:id'} component={PlaylistView} />
+                <Route exact path="/">
+                  <HomeView />
+                </Route>
+              </Switch>
+            </MainSection>
+
+            <PlayerWrapper>
+              <Player />
+            </PlayerWrapper>
+          </Wrapper>
+        </BrowserRouter>
+      </ContextProvider>
+    );
+  } else {
+    return <div>Loading...</div>;
+  }
 };
 
 export default AuthorizedUserApp;
