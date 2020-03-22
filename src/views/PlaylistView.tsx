@@ -10,27 +10,22 @@ const PlaylistView: FunctionComponent = () => {
   const { id } = useParams();
   const [currentTrackId, setCurrentTrackId] = useState('');
   const { playlist } = usePlaylistById(id);
-  const { player, playUri } = useContext(SpotifyClientContext);
+  const {
+    playerFunctions: { playUri, pausePlayer },
+  } = useContext(SpotifyClientContext);
 
-  player?.on('player_state_changed', ({ track_window: { current_track } }: Spotify.PlaybackState) => {
-    const {
-      id,
-      linked_from: { id: linkedFromId },
-    } = current_track as PlayerTrack;
-
-    setCurrentTrackId(() => linkedFromId ?? id);
-  });
-
-  const pausePlaylist = () => player?.pause();
+  // player?.on('player_state_changed', ({ track_window: { current_track } }: Spotify.PlaybackState) => {
+  //   const {
+  //     id,
+  //     linked_from: { id: linkedFromId },
+  //   } = current_track as PlayerTrack;
+  //
+  //   setCurrentTrackId(() => linkedFromId ?? id);
+  // });
 
   if (playlist) {
     return (
-      <PlaylistPage
-        playlist={playlist}
-        currentTrackId={currentTrackId}
-        playUri={playUri}
-        pausePlaylist={pausePlaylist}
-      />
+      <PlaylistPage playlist={playlist} currentTrackId={currentTrackId} playUri={playUri} pausePlayer={pausePlayer} />
     );
   } else {
     return <BaseLoading />;

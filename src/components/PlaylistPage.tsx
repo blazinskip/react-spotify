@@ -3,7 +3,7 @@ import { BasePrimaryButton } from '../styles';
 import { msToMinutesAndSeconds } from '../utils';
 import React, { FunctionComponent } from 'react';
 import { Playlist } from '../models';
-import { PlayUriFunction } from '../context';
+import { PausePlayerFunction, PlayUriFunction } from '../context';
 
 const PlaylistPageWrapper = styled.div`
   display: flex;
@@ -78,12 +78,12 @@ interface PlaylistProps {
   playlist: Playlist;
   currentTrackId: string;
   playUri: PlayUriFunction;
-  pausePlaylist: Function;
+  pausePlayer: PausePlayerFunction;
 }
 
 type Props = PlaylistProps;
 
-const PlaylistPage: FunctionComponent<Props> = ({ playlist, currentTrackId, playUri, pausePlaylist }: Props) => {
+const PlaylistPage: FunctionComponent<Props> = ({ playlist, currentTrackId, playUri, pausePlayer }: Props) => {
   return (
     <PlaylistPageWrapper>
       <PlaylistInfo>
@@ -104,7 +104,7 @@ const PlaylistPage: FunctionComponent<Props> = ({ playlist, currentTrackId, play
                 currentTrack
                 onDoubleClick={() => playUri({ uri: playlist.uri, offset: index })}
               >
-                <PlayTrackButton onClick={() => pausePlaylist}>
+                <PlayTrackButton onClick={() => pausePlayer}>
                   <i className="material-icons">pause</i>
                 </PlayTrackButton>
 
