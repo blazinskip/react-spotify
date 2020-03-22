@@ -75,7 +75,10 @@ const RightSection = styled.div``;
 type Props = {};
 
 const Player: FunctionComponent<Props> = () => {
-  const { player, paused } = useContext(SpotifyClientContext);
+  const {
+    player,
+    playerState: { paused },
+  } = useContext(SpotifyClientContext);
 
   return (
     <PlayerWrapper>
