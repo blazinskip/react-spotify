@@ -4,6 +4,7 @@ import { useGetUserMe, usePlaylists, useSpotifyPlayer } from '../hooks';
 import { PlayerState, PlayUriOptions } from '../context/models';
 import playerApi from '../api/player.api';
 import { Context } from '../context';
+import { PlayerTrack } from '../models';
 
 const SpotifyWrapper = ({ children }: PropsWithChildren<{}>) => {
   const params = window.location.hash
@@ -19,7 +20,7 @@ const SpotifyWrapper = ({ children }: PropsWithChildren<{}>) => {
     localStorage.setItem('tokenType', params.token_type);
   }
 
-  const [playerState, setPlayerState] = useState<PlayerState>({ paused: false });
+  const [playerState, setPlayerState] = useState<PlayerState>({ paused: false, currentPlayedTrackId: '' });
   const [user] = useGetUserMe();
   const [playlists] = usePlaylists();
   const { player, deviceId } = useSpotifyPlayer();
@@ -33,6 +34,15 @@ const SpotifyWrapper = ({ children }: PropsWithChildren<{}>) => {
 
       setPlayerState(playerState => ({ ...playerState, paused: state.paused }));
     });
+  });
+
+  player?.on('player_state_changed', ({ track_window: { current_track } }: Spotify.PlaybackState) => {
+    const {
+      id,
+      linked_from: { id: linkedFromId },
+    } = current_track as PlayerTrack;
+
+    setPlayerState(playerState => ({ ...playerState, currentPlayedTrackId: linkedFromId ?? id }));
   });
 
   const playUri = ({ uri, offset }: PlayUriOptions) => playerApi.playUri({ uri, offset, deviceId });
