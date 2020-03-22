@@ -1,12 +1,12 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import SpotifyClientContext from '../context/SpotifyClientContext';
+import SpotifyClientContext from './SpotifyClientContext';
 import { useGetUserMe, usePlaylists, useSpotifyPlayer } from '../hooks';
-import { PlayerState, PlayUriOptions } from '../context/models';
+import { PlayerState, PlayUriOptions } from './models';
 import playerApi from '../api/player.api';
-import { Context } from '../context';
+import { Context } from './index';
 import { PlayerTrack } from '../models';
 
-const SpotifyWrapper = ({ children }: PropsWithChildren<{}>) => {
+const ContextProvider = ({ children }: PropsWithChildren<{}>) => {
   const params = window.location.hash
     .substring(1)
     .split('&')
@@ -86,4 +86,4 @@ const SpotifyWrapper = ({ children }: PropsWithChildren<{}>) => {
   return <SpotifyClientContext.Provider value={context}>{children}</SpotifyClientContext.Provider>;
 };
 
-export default SpotifyWrapper;
+export default ContextProvider;
