@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import PlaylistView from '../views/PlaylistView';
 import ContextProvider from '../context/ContextProvider';
 import { useSpotifyPlayer } from '../hooks';
+import ArtistPage from '../views/ArtistPage';
 
 const Wrapper = styled.main`
   display: grid;
@@ -56,6 +57,7 @@ const AuthorizedUserApp = () => {
 
               <Switch>
                 <Route exact path={'/playlist/:id'} component={PlaylistView} />
+                <Route exact path={'/artist/:id'} component={ArtistPage} />
                 <Route exact path="/">
                   <HomeView />
                 </Route>
