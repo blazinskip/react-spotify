@@ -4,6 +4,7 @@ import { msToMinutesAndSeconds } from '../utils';
 import React, { FunctionComponent } from 'react';
 import { Playlist } from '../models';
 import { PausePlayerFunction, PlayUriFunction } from '../context';
+import { Link } from 'react-router-dom';
 
 const PlaylistPageWrapper = styled.div`
   display: flex;
@@ -74,6 +75,12 @@ const PlaylistTrack = styled.div<{ currentTrack?: boolean }>`
   }
 `;
 
+const PlaylistTrackArtists = styled.div``;
+const PlaylistTrackArtist = styled(Link)`
+  text-decoration: none;
+  color: initial;
+`;
+
 interface PlaylistProps {
   playlist: Playlist;
   currentTrackId: string;
@@ -84,6 +91,13 @@ interface PlaylistProps {
 type Props = PlaylistProps;
 
 const PlaylistPage: FunctionComponent<Props> = ({ playlist, currentTrackId, playUri, pausePlayer }: Props) => {
+  // todo extend type
+  const artistToArtistLink = (artist: { id: string; name: string }) => (
+    <PlaylistTrackArtist key={artist.id} to={`/artist/${artist.id}`}>
+      {artist.name}&nbsp;
+    </PlaylistTrackArtist>
+  );
+
   return (
     <PlaylistPageWrapper>
       <PlaylistInfo>
@@ -110,7 +124,7 @@ const PlaylistPage: FunctionComponent<Props> = ({ playlist, currentTrackId, play
 
                 <PlaylistTractInfoWrapper>
                   <TrackName>{item?.track?.name ?? ''}</TrackName>
-                  <span>{item.track.artists.map(artist => artist.name).join(' - ')}</span>
+                  <PlaylistTrackArtists>{item.track.artists.map(artistToArtistLink)}</PlaylistTrackArtists>
                 </PlaylistTractInfoWrapper>
 
                 <TrackDuration>{msToMinutesAndSeconds(item?.track?.duration_ms)}</TrackDuration>
@@ -125,7 +139,7 @@ const PlaylistPage: FunctionComponent<Props> = ({ playlist, currentTrackId, play
 
                 <PlaylistTractInfoWrapper>
                   <TrackName>{item?.track?.name ?? ''}</TrackName>
-                  <span> {item.track.artists.map(artist => artist.name).join(' - ')}</span>
+                  <PlaylistTrackArtists>{item.track.artists.map(artistToArtistLink)}</PlaylistTrackArtists>
                 </PlaylistTractInfoWrapper>
 
                 <TrackDuration>{msToMinutesAndSeconds(item?.track?.duration_ms)}</TrackDuration>
