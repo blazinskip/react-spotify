@@ -1,3 +1,4 @@
+export * from './useArtist';
 export * from './useGetUserMe';
 
 export * from './usePlaylistById';
