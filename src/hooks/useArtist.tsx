@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Artist } from '../models';
+import { Artist, ArtistAlbum, ArtistTopTrack, Page } from '../models';
 
 const getArtistById = async (id?: string) => {
   const token = localStorage.getItem('token');
@@ -11,28 +11,38 @@ const getArtistById = async (id?: string) => {
       Authorization: `${tokenType} ${token}`,
     },
   });
-  const getArtistTopTracks = axios.get(`https://api.spotify.com/v1/artists/${id}/top-tracks?country=PL`, {
-    headers: {
-      Authorization: `${tokenType} ${token}`,
+
+  const getArtistTopTracks = axios.get<{ tracks: ArtistTopTrack[] }>(
+    `https://api.spotify.com/v1/artists/${id}/top-tracks?country=PL`,
+    {
+      headers: {
+        Authorization: `${tokenType} ${token}`,
+      },
     },
-  });
-  const getArtistAlbums = axios.get(`https://api.spotify.com/v1/artists/${id}/albums`, {
+  );
+
+  const getArtistAlbums = axios.get<Page<ArtistAlbum>>(`https://api.spotify.com/v1/artists/${id}/albums`, {
     headers: {
       Authorization: `${tokenType} ${token}`,
     },
   });
 
-  return axios.all([getArtist, getArtistTopTracks, getArtistAlbums]);
+  return Promise.all([getArtist, getArtistTopTracks, getArtistAlbums]);
 };
 
 export function useArtist(id?: string) {
   const [artist, setArtist] = useState<Artist>({} as Artist);
   useEffect(() => {
     const resolveArtist = async () => {
-      const result = await getArtistById(id);
-      const [artist, tracks, albums] = result.map(axiosResponse => axiosResponse.data);
+      const axiosResponses = await getArtistById(id);
+      const [artist, tracks, albums] = axiosResponses.map(axiosResponse => axiosResponse.data) as [
+        Artist,
+        { tracks: ArtistTopTrack[] },
+        Page<ArtistAlbum>,
+      ];
 
-      setArtist(() => ({ ...artist, tracks: tracks.tracks, albums }));
+      const createdArtist = { ...artist, topTracks: tracks.tracks, albums };
+      setArtist(() => ({ ...createdArtist }));
     };
 
     resolveArtist();
