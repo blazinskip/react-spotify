@@ -1,16 +1,19 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent } from 'react';
 import { useParams } from 'react-router-dom';
 import { useArtist } from '../hooks';
+import ArtistPageHeader from '../components/ArtistPageHeader';
 
 const ArtistPage: FunctionComponent = () => {
   const { id } = useParams();
   const { artist } = useArtist(id);
 
-  useEffect(() => {
-    console.log(artist);
-  }, [artist]);
+  const { name } = artist;
 
-  return <div>Hello From artist view component {id}</div>;
+  return (
+    <div>
+      <ArtistPageHeader name={name} />
+    </div>
+  );
 };
 
 export default ArtistPage;
