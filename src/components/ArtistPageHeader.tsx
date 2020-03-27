@@ -1,9 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { BasePrimaryButton } from '../styles';
+import { PlayUriFunction } from '../context';
 
 interface OwnProps {
-  name: string;
+  readonly name: string;
+  readonly uri: string;
+  readonly playUri: PlayUriFunction;
 }
 
 type Props = OwnProps;
@@ -24,12 +27,12 @@ const PlayButton = styled(BasePrimaryButton)`
   padding: 12px 0;
 `;
 
-const ArtistPageHeader: FunctionComponent<Props> = ({ name }: Props) => {
+const ArtistPageHeader: FunctionComponent<Props> = ({ name, uri, playUri }: Props) => {
   return (
     <ArtistHeaderSection>
       <span>ARTIST</span>
       <ArtistName>{name}</ArtistName>
-      <PlayButton>play</PlayButton>
+      <PlayButton onClick={() => playUri({ uri })}>play</PlayButton>
     </ArtistHeaderSection>
   );
 };
