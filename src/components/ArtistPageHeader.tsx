@@ -8,9 +8,7 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const ArtistHeaderSection = styled.section`
-  margin-top: 72px;
-`;
+const ArtistHeaderSection = styled.section``;
 
 const ArtistName = styled.h3`
   margin-top: 0;
