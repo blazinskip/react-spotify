@@ -1,9 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { ArtistTopTrack } from '../models';
 import styled from 'styled-components';
+import { msToMinutesAndSeconds } from '../utils';
 
 interface OwnProps {
-  topTracks: ArtistTopTrack[];
+  readonly topTracks: ArtistTopTrack[];
+  readonly currentPlayedTrackId: string;
 }
 
 type Props = OwnProps;
@@ -18,17 +20,27 @@ const TopTracksList = styled.ul`
   list-style: none;
 `;
 
-const TopTrackListItem = styled.li`
+const TopTrackName = styled.span``;
+
+const TopTrackListItem = styled.li<{ currentPlayedTrackId: boolean }>`
+  transition: background-color 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+
   align-items: center;
   display: flex;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  border-bottom: 1px solid #f6e6fd;
+  padding: 0.6rem 1rem;
 
   &:first-of-type {
     border-top: 1px solid #f6e6fd;
   }
 
-  border-bottom: 1px solid #f6e6fd;
+  &:hover {
+    background: #f6e6fd;
+  }
+
+  ${TopTrackName} {
+    color: ${({ currentPlayedTrackId, theme }) => (currentPlayedTrackId ? theme.colors.greenDark : 'initial')};
+  }
 `;
 
 const TopTrackNumber = styled.span`
@@ -43,22 +55,25 @@ const TopTrackAddToFavouriteButton = styled.button`
   background: none;
 `;
 
-const TopTrackName = styled.span``;
+const TopTrackDuration = styled.span`
+  margin-left: auto;
+`;
 
-const ArtistPageTopTracks: FunctionComponent<Props> = ({ topTracks }: Props) => {
+const ArtistPageTopTracks: FunctionComponent<Props> = ({ topTracks, currentPlayedTrackId }: Props) => {
   return (
     <TopTracksSection>
       <header>
         <h3>Popular</h3>
         <TopTracksList>
           {topTracks &&
-            topTracks.map(({ id, name }, index) => (
-              <TopTrackListItem key={id}>
+            topTracks.map(({ id, name, duration_ms }, index) => (
+              <TopTrackListItem key={id} currentPlayedTrackId={id === currentPlayedTrackId}>
                 <TopTrackNumber>{index + 1}</TopTrackNumber>
                 <TopTrackAddToFavouriteButton>
                   <span className="material-icons">favorite_border</span>
                 </TopTrackAddToFavouriteButton>
                 <TopTrackName>{name}</TopTrackName>
+                <TopTrackDuration>{msToMinutesAndSeconds(duration_ms)}</TopTrackDuration>
               </TopTrackListItem>
             ))}
         </TopTracksList>

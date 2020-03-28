@@ -14,6 +14,7 @@ const ArtistPageWrapper = styled.div`
 const ArtistPage: FunctionComponent = () => {
   const {
     playerFunctions: { playUri },
+    playerState: { currentPlayedTrackId },
   } = useContext(SpotifyClientContext);
   const { id } = useParams();
   const { artist } = useArtist(id);
@@ -23,7 +24,7 @@ const ArtistPage: FunctionComponent = () => {
   return (
     <ArtistPageWrapper>
       <ArtistPageHeader name={name} uri={uri} playUri={playUri} />
-      <ArtistPageTopTracks topTracks={topTracks} />
+      <ArtistPageTopTracks topTracks={topTracks} currentPlayedTrackId={currentPlayedTrackId} />
     </ArtistPageWrapper>
   );
 };
