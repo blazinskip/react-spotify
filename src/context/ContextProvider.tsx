@@ -14,7 +14,7 @@ type ContextProviderProps = {
 const ContextProvider = ({ children, player, deviceId }: PropsWithChildren<ContextProviderProps>) => {
   const [playlists] = usePlaylists();
   const [playerState, setPlayerState] = useState<PlayerState>({
-    currentTrack: {},
+    currentTrack: undefined,
     paused: false,
     currentPlayedTrackId: '',
   });
@@ -36,7 +36,13 @@ const ContextProvider = ({ children, player, deviceId }: PropsWithChildren<Conte
 
     setContext((context: Context) => ({ ...context, playerFunctions }));
 
-    player.on('player_state_changed', ({ paused, track_window: { current_track } }: Spotify.PlaybackState) => {
+    player.on('player_state_changed', (state: Spotify.PlaybackState) => {
+      console.log(state);
+      const {
+        paused,
+        track_window: { current_track },
+      } = state;
+
       const {
         id,
         linked_from: { id: linkedFromId },
@@ -44,7 +50,7 @@ const ContextProvider = ({ children, player, deviceId }: PropsWithChildren<Conte
 
       setPlayerState(playerState => ({
         ...playerState,
-        currentTrack: current_track,
+        currentTrack: current_track as PlayerTrack,
         currentPlayedTrackId: linkedFromId ?? id,
         paused,
       }));

@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
 import SpotifyClientContext from '../context/SpotifyClientContext';
+import { PlayerTrack } from '../models';
 
 const PlayerWrapper = styled.div`
   display: grid;
@@ -76,7 +77,7 @@ type Props = {};
 
 const Player: FunctionComponent<Props> = () => {
   const {
-    playerState: { paused },
+    playerState: { paused, currentTrack },
     playerFunctions: { playPreviousTrack, resumePlayer, pausePlayer, playNextTrack },
   } = useContext(SpotifyClientContext);
 
@@ -84,12 +85,12 @@ const Player: FunctionComponent<Props> = () => {
     <PlayerWrapper>
       <LeftSection>
         <CurrentSongImageWrapper>
-          <img src="https://pl.scdn.co/images/pl/default/d7fcb5f7d5f423fc364706ebb5e6c007c389f843" alt="" />
+          <img srcSet={currentTrack?.album?.images[0]?.url} alt="" />
         </CurrentSongImageWrapper>
 
         <CurrentSongInfoWrapper>
-          <h3>Secret Void</h3>
-          <small>BOKKA</small>
+          <h3>{currentTrack?.name}</h3>
+          <small>{currentTrack?.artists.map(artist => artist.name).join(' ')}</small>
         </CurrentSongInfoWrapper>
       </LeftSection>
       <CenterSection>
