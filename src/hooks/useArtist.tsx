@@ -21,7 +21,7 @@ const getArtistById = async (id?: string) => {
     },
   );
 
-  const getArtistAlbums = axios.get<Page<ArtistAlbum>>(`https://api.spotify.com/v1/artists/${id}/albums`, {
+  const getArtistAlbums = axios.get<Page<ArtistAlbum>>(`https://api.spotify.com/v1/artists/${id}/albums?country=PL`, {
     headers: {
       Authorization: `${tokenType} ${token}`,
     },
