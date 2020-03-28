@@ -24,10 +24,10 @@ const ContextProvider = ({ children, player, deviceId }: PropsWithChildren<Conte
   useEffect(() => {
     const playerFunctions = {
       playUri: ({ uri, offset }: PlayUriOptions) => playerApi.playUri({ uri, offset, deviceId }),
-      resumePlayer: () => player?.resume(),
-      pausePlayer: () => player?.pause(),
-      playNextTrack: () => player?.nextTrack(),
-      playPreviousTrack: () => player?.previousTrack(),
+      resumePlayer: () => player.resume(),
+      pausePlayer: () => player.pause(),
+      playNextTrack: () => player.nextTrack(),
+      playPreviousTrack: () => player.previousTrack(),
     };
 
     setContext((context: Context) => ({ ...context, playerFunctions }));
