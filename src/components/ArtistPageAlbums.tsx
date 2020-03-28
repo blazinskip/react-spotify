@@ -2,9 +2,13 @@ import React, { FunctionComponent } from 'react';
 import { ArtistAlbum, Page } from '../models';
 import styled from 'styled-components';
 import ArtistPageAlbum from './ArtistPageAlbum';
+import { PlayUriFunction } from '../context';
 
 interface OwnProps {
-  albums: Page<ArtistAlbum>;
+  readonly albums: ArtistAlbum[];
+  readonly singles: ArtistAlbum[];
+  readonly appearsOnAlbums: ArtistAlbum[];
+  readonly playUri: PlayUriFunction;
 }
 
 type Props = OwnProps;
@@ -14,11 +18,21 @@ const AlbumsSection = styled.section`
   display: flex;
 `;
 
-const ArtistPageAlbums: FunctionComponent<Props> = ({ albums }: Props) => {
+const getAlbumsTemplate = (albumsHeader: string, albums: ArtistAlbum[], playUri: PlayUriFunction) => {
+  return (
+    <>
+      <h3>{albumsHeader}</h3>
+      {albums && albums.map(album => <ArtistPageAlbum key={album.id} album={album} playUri={playUri} />)}
+    </>
+  );
+};
+
+const ArtistPageAlbums: FunctionComponent<Props> = ({ albums, singles, appearsOnAlbums, playUri }: Props) => {
   return (
     <AlbumsSection>
-      <h3>Albums</h3>
-      {albums && albums.items.map(album => <ArtistPageAlbum key={album.id} album={album} />)}
+      {albums?.length ? getAlbumsTemplate('Albums', albums, playUri) : null}
+      {singles?.length ? getAlbumsTemplate('Singles and EPs', singles, playUri) : null}
+      {appearsOnAlbums?.length ? getAlbumsTemplate('Appears On', appearsOnAlbums, playUri) : null}
     </AlbumsSection>
   );
 };
