@@ -13,7 +13,11 @@ type ContextProviderProps = {
 
 const ContextProvider = ({ children, player, deviceId }: PropsWithChildren<ContextProviderProps>) => {
   const [playlists] = usePlaylists();
-  const [playerState, setPlayerState] = useState<PlayerState>({ paused: false, currentPlayedTrackId: '' });
+  const [playerState, setPlayerState] = useState<PlayerState>({
+    currentTrack: {},
+    paused: false,
+    currentPlayedTrackId: '',
+  });
   const [context, setContext] = useState<Context>({ playlists, playerState, playerFunctions: {} } as Context);
 
   useEffect(() => {
@@ -32,22 +36,18 @@ const ContextProvider = ({ children, player, deviceId }: PropsWithChildren<Conte
 
     setContext((context: Context) => ({ ...context, playerFunctions }));
 
-    player.on('player_state_changed', ({ track_window: { current_track } }: Spotify.PlaybackState) => {
+    player.on('player_state_changed', ({ paused, track_window: { current_track } }: Spotify.PlaybackState) => {
       const {
         id,
         linked_from: { id: linkedFromId },
       } = current_track as PlayerTrack;
 
-      setPlayerState(playerState => ({ ...playerState, currentPlayedTrackId: linkedFromId ?? id }));
-
-      player.getCurrentState().then(state => {
-        if (!state) {
-          console.error('User is not playing music through the Web Playback SDK');
-          return;
-        }
-
-        setPlayerState(playerState => ({ ...playerState, paused: state.paused }));
-      });
+      setPlayerState(playerState => ({
+        ...playerState,
+        currentTrack: current_track,
+        currentPlayedTrackId: linkedFromId ?? id,
+        paused,
+      }));
     });
   }, []);
 
