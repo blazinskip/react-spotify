@@ -2,10 +2,12 @@ import React, { FunctionComponent } from 'react';
 import { ArtistAlbum } from '../models';
 import styled from 'styled-components';
 import { PlayUriFunction } from '../context';
+import ArtistPageTracks from './ArtistPageTracks';
 
 interface OwnProps {
   readonly album: ArtistAlbum;
   readonly playUri: PlayUriFunction;
+  readonly currentPlayedTrackId: string;
 }
 
 type Props = OwnProps;
@@ -76,8 +78,8 @@ const AlbumName = styled.h2`
   font-weight: 100;
 `;
 
-const ArtistPageAlbum: FunctionComponent<Props> = ({ album, playUri }: Props) => {
-  const { uri, name, images, release_date } = album;
+const ArtistPageAlbum: FunctionComponent<Props> = ({ album, playUri, currentPlayedTrackId }: Props) => {
+  const { uri, name, images, release_date, tracks } = album;
 
   const releaseDate = release_date.split('-')[0] ?? 'N/A';
 
@@ -95,6 +97,8 @@ const ArtistPageAlbum: FunctionComponent<Props> = ({ album, playUri }: Props) =>
           <AlbumName>{name}</AlbumName>
         </AlbumInfo>
       </AlbumInfoWrapper>
+
+      <ArtistPageTracks tracks={tracks.items} currentPlayedTrackId={currentPlayedTrackId} />
     </Album>
   );
 };

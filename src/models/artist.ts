@@ -13,13 +13,6 @@ export type ArtistAlbum = {
 };
 
 export type ArtistAlbumTrack = {
-  readonly uri: string;
-  readonly id: string;
-  readonly name: string;
-  readonly duration_ms: string;
-};
-
-export type ArtistTopTrack = {
   readonly duration_ms: number;
   readonly id: string;
   readonly is_playable: boolean;
@@ -38,6 +31,6 @@ export interface Artist {
   readonly followers: {
     total: number;
   };
-  readonly topTracks: ArtistTopTrack[];
+  readonly topTracks: ArtistAlbumTrack[];
   readonly albums: Page<ArtistAlbum>;
 }

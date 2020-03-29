@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react';
-import { ArtistTopTrack } from '../models';
+import { ArtistAlbumTrack } from '../models';
 import styled from 'styled-components';
 import { msToMinutesAndSeconds } from '../utils';
 
 interface OwnProps {
-  readonly topTracks: ArtistTopTrack[];
+  readonly tracks: ArtistAlbumTrack[];
   readonly currentPlayedTrackId: string;
 }
 
@@ -59,14 +59,14 @@ const TopTrackDuration = styled.span`
   margin-left: auto;
 `;
 
-const ArtistPageTopTracks: FunctionComponent<Props> = ({ topTracks, currentPlayedTrackId }: Props) => {
+const ArtistPageTracks: FunctionComponent<Props> = ({ tracks, currentPlayedTrackId }: Props) => {
   return (
     <TopTracksSection>
       <header>
         <h3>Popular</h3>
         <TopTracksList>
-          {topTracks &&
-            topTracks.map(({ id, name, duration_ms }, index) => (
+          {tracks &&
+            tracks.map(({ id, name, duration_ms }, index) => (
               <TopTrackListItem key={id} currentPlayedTrackId={id === currentPlayedTrackId}>
                 <TopTrackNumber>{index + 1}</TopTrackNumber>
                 <TopTrackAddToFavouriteButton>
@@ -82,4 +82,4 @@ const ArtistPageTopTracks: FunctionComponent<Props> = ({ topTracks, currentPlaye
   );
 };
 
-export default ArtistPageTopTracks;
+export default ArtistPageTracks;
