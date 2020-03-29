@@ -2,7 +2,7 @@ import React, { FunctionComponent, useContext, useEffect, useState } from 'react
 import { useParams } from 'react-router-dom';
 import { useArtist } from '../hooks';
 import ArtistPageHeader from '../components/ArtistPageHeader';
-import ArtistPageTopTracks from '../components/ArtistPageTopTracks';
+import ArtistPageTracks from '../components/ArtistPageTracks';
 import styled from 'styled-components';
 import SpotifyClientContext from '../context/SpotifyClientContext';
 import ArtistPageAlbums from '../components/ArtistPageAlbums';
@@ -46,8 +46,14 @@ const ArtistPage: FunctionComponent = () => {
   return (
     <ArtistPageWrapper>
       <ArtistPageHeader name={name} uri={uri} playUri={playUri} />
-      <ArtistPageTopTracks topTracks={topTracks} currentPlayedTrackId={currentPlayedTrackId} />
-      <ArtistPageAlbums albums={artistAlbums} singles={singles} playUri={playUri} appearsOnAlbums={appearsOnAlbums} />
+      <ArtistPageTracks tracks={topTracks} currentPlayedTrackId={currentPlayedTrackId} />
+      <ArtistPageAlbums
+        albums={artistAlbums}
+        singles={singles}
+        playUri={playUri}
+        appearsOnAlbums={appearsOnAlbums}
+        currentPlayedTrackId={currentPlayedTrackId}
+      />
     </ArtistPageWrapper>
   );
 };

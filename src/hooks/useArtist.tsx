@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Artist, ArtistAlbum, ArtistAlbumTrack, ArtistTopTrack, Page } from '../models';
+import { Artist, ArtistAlbum, ArtistAlbumTrack, Page } from '../models';
 
 const getArtistById = async (id?: string) => {
   const token = localStorage.getItem('token');
@@ -12,7 +12,7 @@ const getArtistById = async (id?: string) => {
     },
   });
 
-  const getArtistTopTracks = axios.get<{ tracks: ArtistTopTrack[] }>(
+  const getArtistTopTracks = axios.get<{ tracks: ArtistAlbumTrack[] }>(
     `https://api.spotify.com/v1/artists/${id}/top-tracks?country=PL`,
     {
       headers: {
@@ -53,7 +53,7 @@ export function useArtist(id?: string) {
       const axiosResponses = await getArtistById(id);
       const [artist, tracks, albums] = axiosResponses.map(axiosResponse => axiosResponse.data) as [
         Artist,
-        { tracks: ArtistTopTrack[] },
+        { tracks: ArtistAlbumTrack[] },
         Page<ArtistAlbum>,
       ];
 
