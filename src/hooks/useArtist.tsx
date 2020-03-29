@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Artist, ArtistAlbum, ArtistTopTrack, Page } from '../models';
+import { Artist, ArtistAlbum, ArtistAlbumTrack, ArtistTopTrack, Page } from '../models';
 
 const getArtistById = async (id?: string) => {
   const token = localStorage.getItem('token');
@@ -30,6 +30,22 @@ const getArtistById = async (id?: string) => {
   return Promise.all([getArtist, getArtistTopTracks, getArtistAlbums]);
 };
 
+const getTracksForAlbums = (artistAlbums: ArtistAlbum[]) => {
+  const token = localStorage.getItem('token');
+  const tokenType = localStorage.getItem('tokenType');
+
+  const tracksForAlbum = (album: ArtistAlbum) =>
+    axios.get<Page<ArtistAlbumTrack>>(`https://api.spotify.com/v1/albums/${album.id}/tracks?country=PL`, {
+      headers: {
+        Authorization: `${tokenType} ${token}`,
+      },
+    });
+
+  const tracksPerAlbum = artistAlbums.map(album => tracksForAlbum(album));
+
+  return Promise.all(tracksPerAlbum);
+};
+
 export function useArtist(id?: string) {
   const [artist, setArtist] = useState<Artist>({} as Artist);
   useEffect(() => {
@@ -41,7 +57,16 @@ export function useArtist(id?: string) {
         Page<ArtistAlbum>,
       ];
 
-      const createdArtist = { ...artist, topTracks: tracks.tracks, albums };
+      const tracksForAlbumsAxiosResponses = await getTracksForAlbums(albums.items);
+      const tracksForAlbums = tracksForAlbumsAxiosResponses.map(value => value.data);
+
+      const albumsWithTracks = {
+        ...albums,
+        items: albums.items.map((album, index) => ({ ...album, tracks: tracksForAlbums[index] ?? [] })),
+      } as Page<ArtistAlbum>;
+
+      const createdArtist = { ...artist, topTracks: tracks.tracks, albums: albumsWithTracks };
+
       setArtist(() => ({ ...createdArtist }));
     };
 

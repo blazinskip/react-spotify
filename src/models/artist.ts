@@ -9,6 +9,14 @@ export type ArtistAlbum = {
   readonly type: 'album';
   readonly uri: string;
   readonly release_date: string;
+  readonly tracks: Page<ArtistAlbumTrack>;
+};
+
+export type ArtistAlbumTrack = {
+  readonly uri: string;
+  readonly id: string;
+  readonly name: string;
+  readonly duration_ms: string;
 };
 
 export type ArtistTopTrack = {
