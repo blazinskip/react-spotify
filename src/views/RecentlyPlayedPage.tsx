@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from 'react';
+import { useRecentlyPlayed } from '../hooks';
+import RecentlyPlayedPageItems from '../components/RecentlyPlayedPageItems';
 
-type Props = {};
-
-const RecentlyPlayedPage: FunctionComponent<Props> = () => {
-  return <div>Recently Played Page</div>;
+const RecentlyPlayedPage: FunctionComponent = () => {
+  const { albums } = useRecentlyPlayed();
+  return <RecentlyPlayedPageItems albums={[...albums, ...albums, ...albums]} />;
 };
 
 export default RecentlyPlayedPage;
