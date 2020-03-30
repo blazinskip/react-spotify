@@ -14,6 +14,7 @@ import RecentlyPlayedPage from '../views/RecentlyPlayedPage';
 import LikedSongsPage from '../views/LikedSongsPage';
 import FavouriteAlbumsPage from '../views/FavouriteAlbumsPage';
 import FavouriteArtistsPage from '../views/FavouriteArtistsPage';
+import FavouritePodcastsPage from '../views/FavouritePodcastsPage';
 
 const Wrapper = styled.main`
   display: grid;
@@ -66,6 +67,7 @@ const AuthorizedUserApp = () => {
                 <Route exact path={'/liked-songs'} component={LikedSongsPage} />
                 <Route exact path={'/favourite-albums'} component={FavouriteAlbumsPage} />
                 <Route exact path={'/favourite-artists'} component={FavouriteArtistsPage} />
+                <Route exact path={'/favourite-podcasts'} component={FavouritePodcastsPage} />
                 <Route exact path={'/playlist/:id'} component={PlaylistView} />
                 <Route exact path={'/artist/:id'} component={ArtistPage} />
                 <Route exact path="/">
