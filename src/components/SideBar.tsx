@@ -113,7 +113,7 @@ const SideBar = () => {
             <NavigationSectionListItemLink to={`/liked-songs`}>Liked Songs</NavigationSectionListItemLink>
           </NavigationSectionListItem>
           <NavigationSectionListItem>
-            <NavigationSectionListItemLink to={`/playlist/id`}>Albums</NavigationSectionListItemLink>
+            <NavigationSectionListItemLink to={`/favourite-albums`}>Albums</NavigationSectionListItemLink>
           </NavigationSectionListItem>
           <NavigationSectionListItem>
             <NavigationSectionListItemLink to={`/playlist/id`}>Artists</NavigationSectionListItemLink>
