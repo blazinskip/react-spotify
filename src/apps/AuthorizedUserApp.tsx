@@ -9,6 +9,7 @@ import PlaylistView from '../views/PlaylistView';
 import ContextProvider from '../context/ContextProvider';
 import { useSpotifyPlayer } from '../hooks';
 import ArtistPage from '../views/ArtistPage';
+import MadeForYouPage from '../views/MadeForYouPage';
 
 const Wrapper = styled.main`
   display: grid;
@@ -56,6 +57,7 @@ const AuthorizedUserApp = () => {
               <div />
 
               <Switch>
+                <Route exact path={'/made-for-you'} component={MadeForYouPage} />
                 <Route exact path={'/playlist/:id'} component={PlaylistView} />
                 <Route exact path={'/artist/:id'} component={ArtistPage} />
                 <Route exact path="/">
