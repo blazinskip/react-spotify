@@ -20,11 +20,19 @@ const MainNavigationListItem = styled.li`
   display: flex;
 `;
 
-const MainNavigationLink = styled.a`
+const MainNavigationLink = styled(Link)`
   align-items: center;
   flex-grow: 1;
   display: flex;
   padding: 0.3rem 0;
+
+  color: initial;
+  text-decoration: none;
+  transition: opacity 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 0.7;
+  }
 
   span {
     padding-left: 0.5rem;
@@ -80,12 +88,12 @@ const SideBar = () => {
     <SideBarSection>
       <MainNavigationList>
         <MainNavigationListItem>
-          <MainNavigationLink>
+          <MainNavigationLink to={'/'}>
             <i className="material-icons">home</i> <span>Home Page</span>
           </MainNavigationLink>
         </MainNavigationListItem>
         <MainNavigationListItem>
-          <MainNavigationLink>
+          <MainNavigationLink to={'/'}>
             <i className="material-icons">radio</i> <span>Radio</span>
           </MainNavigationLink>
         </MainNavigationListItem>
@@ -96,7 +104,7 @@ const SideBar = () => {
 
         <NavigationSectionList>
           <NavigationSectionListItem>
-            <NavigationSectionListItemLink to={`/playlist/id`}>Made For You</NavigationSectionListItemLink>
+            <NavigationSectionListItemLink to={`/made-for-you`}>Made For You</NavigationSectionListItemLink>
           </NavigationSectionListItem>
           <NavigationSectionListItem>
             <NavigationSectionListItemLink to={`/playlist/id`}>Recently Played</NavigationSectionListItemLink>
