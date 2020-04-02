@@ -7,9 +7,7 @@ const RecentlyPlayedPage: FunctionComponent = () => {
   const { albums } = useRecentlyPlayed();
   return (
     <BasePageWrapper title={'Recently Played'}>
-      <RecentlyPlayedPageItems
-        albums={albums}
-      />
+      <RecentlyPlayedPageItems albums={albums} />
     </BasePageWrapper>
   );
 };
