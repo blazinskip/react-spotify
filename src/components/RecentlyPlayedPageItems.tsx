@@ -39,6 +39,7 @@ const RecentlyPlayedPageItems: FunctionComponent<Props> = ({ albums }: Props) =>
               <img srcSet={album?.images[0].url ?? ''} alt="" />
             </ImageWrapper>
             <div>{album.name}</div>
+            <div>{album.description}</div>
           </Item>
         ))}
     </Items>
