@@ -8,7 +8,6 @@ type Props = {
 const BasePageWrapperSection = styled.section`
   max-height: calc(100vh - 232px);
   overflow: auto;
-  padding-bottom: 500px;
 `;
 
 const BasePageWrapperHeading = styled.h2<{ readonly isStatic: boolean }>`
