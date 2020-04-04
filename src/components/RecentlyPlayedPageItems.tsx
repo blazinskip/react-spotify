@@ -1,9 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { Album } from '../models';
 import styled from 'styled-components';
+import { PlayUriFunction } from '../context';
 
 interface OwnProps {
   readonly albums: Album[];
+  readonly playUri: PlayUriFunction;
 }
 
 type Props = OwnProps;
@@ -60,20 +62,20 @@ const RecentlyPlayedAlbumIcon = styled.img`
   box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
 `;
 
-const RecentlyPlayedPageItems: FunctionComponent<Props> = ({ albums }: Props) => {
+const RecentlyPlayedPageItems: FunctionComponent<Props> = ({ albums, playUri }: Props) => {
   return (
     <RecentlyPlayedItems>
       {albums &&
-        albums.map(album => (
-          <RecentlyPlayedItem key={album.id}>
-            <ImagePlayButton>
+        albums.map(({ id, images, name, uri }) => (
+          <RecentlyPlayedItem key={id}>
+            <ImagePlayButton onClick={() => playUri({ uri: uri })}>
               <PlayIconWrapper>
                 <span className="material-icons">play_arrow</span>
               </PlayIconWrapper>
-              <RecentlyPlayedAlbumIcon srcSet={album?.images[0].url} alt="" />
+              <RecentlyPlayedAlbumIcon srcSet={images[0].url} alt="" />
             </ImagePlayButton>
 
-            <div>{album.name}</div>
+            <div>{name}</div>
           </RecentlyPlayedItem>
         ))}
     </RecentlyPlayedItems>
