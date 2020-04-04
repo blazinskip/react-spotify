@@ -1,11 +1,17 @@
 import React, { FunctionComponent } from 'react';
 import { Album } from '../models';
 import styled from 'styled-components';
-import { PlayUriFunction } from '../context';
+import { PausePlayerFunction, PlayUriFunction, ResumePlayerFunction } from '../context';
 
 interface OwnProps {
   readonly albums: Album[];
-  readonly playUri: PlayUriFunction;
+  readonly playerFunctions: {
+    readonly playUri: PlayUriFunction;
+    readonly resumePlayer: ResumePlayerFunction;
+    readonly pausePlayer: PausePlayerFunction;
+  };
+  readonly currentPlayedUri: string;
+  readonly paused: boolean;
 }
 
 type Props = OwnProps;
@@ -35,7 +41,7 @@ const PlayIconWrapper = styled.div`
   transition: visibility 0.3ms ease-in-out, background-color 0.3ms ease-in-out;
 `;
 
-const ImagePlayButton = styled.button`
+const ImagePlayButton = styled.button<{ isCurrentlyPlayedUri: boolean }>`
   position: relative;
   margin-right: 1rem;
   border: none;
@@ -43,9 +49,19 @@ const ImagePlayButton = styled.button`
   height: 160px;
   background: none;
 
+  ${PlayIconWrapper} {
+    visibility: ${props => (props.isCurrentlyPlayedUri ? 'visible' : 'hidden')};
+    background: ${props => (props.isCurrentlyPlayedUri ? '#190f0fa1' : 'none')};
+
+    span {
+      font-size: ${props => (props.isCurrentlyPlayedUri ? '4rem' : '0')};
+      color: ${props => (props.isCurrentlyPlayedUri ? 'white' : 'none')};
+    }
+  }
+
   &:hover {
     ${PlayIconWrapper} {
-      background: rgba(25, 15, 15, 0.63);
+      background: #190f0fa1;
       visibility: visible;
     }
 
@@ -62,22 +78,83 @@ const RecentlyPlayedAlbumIcon = styled.img`
   box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
 `;
 
-const RecentlyPlayedPageItems: FunctionComponent<Props> = ({ albums, playUri }: Props) => {
+const RecentlyPlayedPageItems: FunctionComponent<Props> = ({
+  albums,
+  paused,
+  playerFunctions,
+  currentPlayedUri,
+}: Props) => {
   return (
     <RecentlyPlayedItems>
       {albums &&
-        albums.map(({ id, images, name, uri }) => (
-          <RecentlyPlayedItem key={id}>
-            <ImagePlayButton onClick={() => playUri({ uri: uri })}>
-              <PlayIconWrapper>
-                <span className="material-icons">play_arrow</span>
-              </PlayIconWrapper>
-              <RecentlyPlayedAlbumIcon srcSet={images[0].url} alt="" />
-            </ImagePlayButton>
+        albums.map(({ id, images, name, uri }) => {
+          if (currentPlayedUri) {
+            if (currentPlayedUri === uri) {
+              if (paused) {
+                return (
+                  <RecentlyPlayedItem key={id}>
+                    <ImagePlayButton
+                      isCurrentlyPlayedUri={uri === currentPlayedUri}
+                      onClick={() => playerFunctions.resumePlayer()}
+                    >
+                      <PlayIconWrapper>
+                        <span className="material-icons">pause</span>
+                      </PlayIconWrapper>
+                      <RecentlyPlayedAlbumIcon srcSet={images[0].url} alt="" />
+                    </ImagePlayButton>
 
-            <div>{name}</div>
-          </RecentlyPlayedItem>
-        ))}
+                    <div>{name}</div>
+                  </RecentlyPlayedItem>
+                );
+              } else {
+                return (
+                  <RecentlyPlayedItem key={id}>
+                    <ImagePlayButton
+                      isCurrentlyPlayedUri={uri === currentPlayedUri}
+                      onClick={() => playerFunctions.pausePlayer()}
+                    >
+                      <PlayIconWrapper>
+                        <span className="material-icons">play_arrow</span>
+                      </PlayIconWrapper>
+                      <RecentlyPlayedAlbumIcon srcSet={images[0].url} alt="" />
+                    </ImagePlayButton>
+
+                    <div>{name}</div>
+                  </RecentlyPlayedItem>
+                );
+              }
+            } else {
+              return (
+                <RecentlyPlayedItem key={id}>
+                  <ImagePlayButton
+                    isCurrentlyPlayedUri={uri === currentPlayedUri}
+                    onClick={() => playerFunctions.playUri({ uri: uri })}
+                  >
+                    <PlayIconWrapper>
+                      <span className="material-icons">play_arrow</span>
+                    </PlayIconWrapper>
+                    <RecentlyPlayedAlbumIcon srcSet={images[0].url} alt="" />
+                  </ImagePlayButton>
+
+                  <div>{name}</div>
+                </RecentlyPlayedItem>
+              );
+            }
+          } else {
+            return (
+              <RecentlyPlayedItem key={id}>
+                <ImagePlayButton isCurrentlyPlayedUri={false} onClick={() => playerFunctions.playUri({ uri: uri })}>
+                  <PlayIconWrapper>
+                    <span className="material-icons">play_arrow</span>
+                  </PlayIconWrapper>
+                  <RecentlyPlayedAlbumIcon srcSet={images[0].url} alt="" />
+                </ImagePlayButton>
+
+                <div>{name}</div>
+              </RecentlyPlayedItem>
+            );
+          }
+        })}
     </RecentlyPlayedItems>
   );
 };
