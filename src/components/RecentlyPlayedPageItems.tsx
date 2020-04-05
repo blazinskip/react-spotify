@@ -98,7 +98,7 @@ const RecentlyPlayedPageItems: FunctionComponent<Props> = ({
                       onClick={() => playerFunctions.resumePlayer()}
                     >
                       <PlayIconWrapper>
-                        <span className="material-icons">pause</span>
+                        <span className="material-icons">play_arrow</span>
                       </PlayIconWrapper>
                       <RecentlyPlayedAlbumIcon srcSet={images[0].url} alt="" />
                     </ImagePlayButton>
@@ -114,7 +114,7 @@ const RecentlyPlayedPageItems: FunctionComponent<Props> = ({
                       onClick={() => playerFunctions.pausePlayer()}
                     >
                       <PlayIconWrapper>
-                        <span className="material-icons">play_arrow</span>
+                        <span className="material-icons">pause</span>
                       </PlayIconWrapper>
                       <RecentlyPlayedAlbumIcon srcSet={images[0].url} alt="" />
                     </ImagePlayButton>
